@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Overview - Urban Mobility Datasets</title>
+    <meta name="description" content="Comprehensive overview of all urban mobility datasets with detailed metadata and export capabilities.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            900: '#0f172a'
+                        },
+                        accent: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+     Navigation 
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-xl font-bold text-primary-900">Urban Mobility Datasets</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-primary-600 transition-colors">Home</a>
+                    <a href="/datasets/" class="text-gray-700 hover:text-primary-600 transition-colors">Browse Datasets</a>
+                    <a href="/datasets/overview/" class="text-primary-600 font-medium">Overview</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+         Header 
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-primary-900 mb-4">Dataset Overview</h1>
+            <p class="text-gray-600 mb-6">Comprehensive overview of all datasets with detailed metadata and export capabilities</p>
+            
+             Export Button 
+            <button id="export-csv" class="bg-accent-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-accent-600 transition-colors">
+                Export as CSV
+            </button>
+        </div>
+
+         Filters 
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Filter by Domain</label>
+                    <select id="domain-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option value="">All Domains</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Public Transit">Public Transit</option>
+                        <option value="Traffic">Traffic</option>
+                        <option value="Mobility">Mobility</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Filter by Country</label>
+                    <select id="country-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option value="">All Countries</option>
+                        <option value="USA">USA</option>
+                        <option value="UK">UK</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Japan">Japan</option>
+                        <option value="France">France</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Canada">Canada</option>
+                        <option value="India">India</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
+                    <select id="status-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option value="">All Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Deprecated">Deprecated</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+         Table 
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dataset</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Domain</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="bg-white divide-y divide-gray-200">
+                         Table rows will be populated by JavaScript 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dataset data (same as in datasets/index.html)
+        const datasets = [
+            {
+                id: 'nyc-taxi-2023',
+                title: 'NYC Taxi Trips 2023',
+                description: 'Complete taxi trip records from New York City including pickup/dropoff locations, timestamps, and fare information.',
+                domain: 'Transportation',
+                country: 'USA',
+                city: 'New York',
+                status: 'Active',
+                size: 'Large',
+                sizeGB: 850,
+                lastUpdated: '2024-01-15',
+                license: 'Open Data',
+                format: 'CSV, Parquet'
+            },
+            {
+                id: 'london-bus-network',
+                title: 'London Bus Network',
+                description: 'Real-time and historical bus location data, route information, and passenger counts from Transport for London.',
+                domain: 'Public Transit',
+                country: 'UK',
+                city: 'London',
+                status: 'Active',
+                size: 'Medium',
+                sizeGB: 5,
+                lastUpdated: '2024-01-10',
+                license: 'TfL Open Data',
+                format: 'JSON, CSV'
+            },
+            {
+                id: 'singapore-traffic',
+                title: 'Singapore Traffic Sensors',
+                description: 'Traffic flow data from 1,200+ sensors across Singapore, including vehicle counts and speed measurements.',
+                domain: 'Traffic',
+                country: 'Singapore',
+                city: 'Singapore',
+                status: 'Active',
+                size: 'Large',
+                sizeGB: 1200,
+                lastUpdated: '2024-01-12',
+                license: 'Singapore Open Data',
+                format: 'CSV, JSON'
+            },
+            {
+                id: 'nyc-traffic-flow-2023',
+                title: 'NYC Traffic Flow 2023',
+                description: 'Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations.',
+                domain: 'Traffic',
+                country: 'USA',
+                city: 'New York',
+                status: 'Active',
+                size: 'Medium',
+                sizeGB: 0.45,
+                lastUpdated: '2024-01-08',
+                license: 'NYC Open Data',
+                format: 'CSV, JSON'
+            },
+            {
+                id: 'berlin-bike-sharing',
+                title: 'Berlin Bike Sharing 2023',
+                description: 'Complete bike sharing usage data from Berlin including station locations, trip durations, and user patterns.',
+                domain: 'Mobility',
+                country: 'Germany',
+                city: 'Berlin',
+                status: 'Active',
+                size: 'Medium',
+                sizeGB: 2.8,
+                lastUpdated: '2024-01-05',
+                license: 'Creative Commons',
+                format: 'CSV, JSON'
+            },
+            {
+                id: 'tokyo-metro-ridership',
+                title: 'Tokyo Metro Ridership',
+                description: 'Historical ridership data from Tokyo Metro system with station-level passenger counts and peak hour analysis.',
+                domain: 'Public Transit',
+                country: 'Japan',
+                city: 'Tokyo',
+                status: 'Active',
+                size: 'Large',
+                sizeGB: 15,
+                lastUpdated: '2024-01-03',
+                license: 'Tokyo Metro License',
+                format: 'CSV, XML'
+            },
+            {
+                id: 'paris-parking-sensors',
+                title: 'Paris Smart Parking',
+                description: 'Real-time parking availability data from smart sensors across Paris parking facilities and street parking.',
+                domain: 'Transportation',
+                country: 'France',
+                city: 'Paris',
+                status: 'Active',
+                size: 'Small',
+                sizeGB: 0.8,
+                lastUpdated: '2024-01-14',
+                license: 'Paris Open Data',
+                format: 'JSON, CSV'
+            },
+            {
+                id: 'amsterdam-cycling-routes',
+                title: 'Amsterdam Cycling Routes',
+                description: 'Comprehensive cycling route data including bike lane usage, traffic counts, and route optimization metrics.',
+                domain: 'Mobility',
+                country: 'Netherlands',
+                city: 'Amsterdam',
+                status: 'Active',
+                size: 'Medium',
+                sizeGB: 1.2,
+                lastUpdated: '2024-01-11',
+                license: 'Amsterdam Open Data',
+                format: 'GeoJSON, CSV'
+            },
+            {
+                id: 'sydney-ferry-operations',
+                title: 'Sydney Ferry Operations',
+                description: 'Ferry schedule adherence, passenger counts, and route performance data from Sydney Harbour ferry network.',
+                domain: 'Public Transit',
+                country: 'Australia',
+                city: 'Sydney',
+                status: 'Active',
+                size: 'Small',
+                sizeGB: 0.65,
+                lastUpdated: '2024-01-09',
+                license: 'NSW Open Data',
+                format: 'CSV, JSON'
+            },
+            {
+                id: 'barcelona-scooter-sharing',
+                title: 'Barcelona E-Scooter Sharing',
+                description: 'Electric scooter sharing usage patterns, trip data, and charging station utilization across Barcelona.',
+                domain: 'Mobility',
+                country: 'Spain',
+                city: 'Barcelona',
+                status: 'Active',
+                size: 'Medium',
+                sizeGB: 1.8,
+                lastUpdated: '2024-01-07',
+                license: 'Barcelona Open Data',
+                format: 'JSON, CSV'
+            },
+            {
+                id: 'toronto-streetcar-delays',
+                title: 'Toronto Streetcar Delays',
+                description: 'Historical delay data for Toronto streetcar system with incident analysis and weather correlation.',
+                domain: 'Public Transit',
+                country: 'Canada',
+                city: 'Toronto',
+                status: 'Deprecated',
+                size: 'Small',
+                sizeGB: 0.45,
+                lastUpdated: '2023-12-01',
+                license: 'Toronto Open Data',
+                format: 'CSV'
+            },
+            {
+                id: 'mumbai-auto-rickshaw',
+                title: 'Mumbai Auto-Rickshaw GPS',
+                description: 'GPS tracking data from auto-rickshaws in Mumbai including route patterns and fare analysis.',
+                domain: 'Transportation',
+                country: 'India',
+                city: 'Mumbai',
+                status: 'Active',
+                size: 'Large',
+                sizeGB: 8.5,
+                lastUpdated: '2024-01-13',
+                license: 'Research Use Only',
+                format: 'CSV, GPX'
+            }
+        ];
+
+        let filteredDatasets = [...datasets];
+
+        // DOM elements
+        const domainFilter = document.getElementById('domain-filter');
+        const countryFilter = document.getElementById('country-filter');
+        const statusFilter = document.getElementById('status-filter');
+        const tableBody = document.getElementById('table-body');
+        const exportBtn = document.getElementById('export-csv');
+
+        // Event listeners
+        domainFilter.addEventListener('change', applyFilters);
+        countryFilter.addEventListener('change', applyFilters);
+        statusFilter.addEventListener('change', applyFilters);
+        exportBtn.addEventListener('click', exportToCSV);
+
+        function applyFilters() {
+            filteredDatasets = datasets.filter(dataset => {
+                return (!domainFilter.value || dataset.domain === domainFilter.value) &&
+                       (!countryFilter.value || dataset.country === countryFilter.value) &&
+                       (!statusFilter.value || dataset.status === statusFilter.value);
+            });
+            renderTable();
+        }
+
+        function renderTable() {
+            tableBody.innerHTML = filteredDatasets.map(dataset => {
+                const statusColor = dataset.status === 'Active' ? 'green' : 'red';
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">${dataset.title}</div>
+                                <div class="text-sm text-gray-500">${dataset.description.substring(0, 80)}...</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                ${dataset.domain}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            ${dataset.city}, ${dataset.country}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            ${dataset.sizeGB}GB
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-${statusColor}-100 text-${statusColor}-800">
+                                ${dataset.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${new Date(dataset.lastUpdated).toLocaleDateString()}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <a href="/datasets/${dataset.id}/" class="text-accent-600 hover:text-accent-900">View Details</a>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function exportToCSV() {
+            const headers = ['Title', 'Domain', 'City', 'Country', 'Status', 'Size (GB)', 'Last Updated', 'License', 'Format'];
+            const csvContent = [
+                headers.join(','),
+                ...filteredDatasets.map(dataset => [
+                    `"${dataset.title}"`,
+                    `"${dataset.domain}"`,
+                    `"${dataset.city}"`,
+                    `"${dataset.country}"`,
+                    `"${dataset.status}"`,
+                    dataset.sizeGB,
+                    `"${dataset.lastUpdated}"`,
+                    `"${dataset.license}"`,
+                    `"${dataset.format}"`
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'datasets_overview.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initial render
+        renderTable();
+    </script>
+</body>
+</html>

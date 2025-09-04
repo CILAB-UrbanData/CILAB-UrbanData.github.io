@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Datasets - Urban Mobility Datasets</title>
+    <meta name="description" content="Browse and search through our comprehensive collection of urban mobility and transportation datasets.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            900: '#0f172a'
+                        },
+                        accent: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+     <!-- Navigation  -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-xl font-bold text-primary-900">Urban Mobility Datasets</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-primary-600 transition-colors">Home</a>
+                    <a href="/datasets/" class="text-primary-600 font-medium">Browse Datasets</a>
+                    <!-- <a href="/datasets/overview/" class="text-gray-700 hover:text-primary-600 transition-colors">Overview</a> -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+         <!-- Header  -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-primary-900 mb-4">Browse Datasets</h1>
+            <p class="text-gray-600">Explore our collection of urban mobility and transportation datasets</p>
+        </div>
+
+         <!-- Search and Filters  -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+             <!-- Search Bar  -->
+            <div class="mb-6">
+                <input 
+                    type="text" 
+                    id="search-input"
+                    placeholder="Search datasets by title, description, or tags..."
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500"
+                >
+            </div>
+
+             <!-- Filters Row  -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                 <!-- Domain Filter  -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Domain</label>
+                    <select id="domain-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-accent-500 focus:border-accent-500">
+                        <option value="">All Domains</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Public Transit">Public Transit</option>
+                        <option value="Traffic">Traffic</option>
+                        <option value="Mobility">Mobility</option>
+                    </select>
+                </div>
+
+                 <!-- Country Filter  -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                    <select id="country-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-accent-500 focus:border-accent-500">
+                        <option value="">All Countries</option>
+                        <option value="USA">USA</option>
+                        <option value="UK">UK</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Japan">Japan</option>
+                        <option value="France">France</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Canada">Canada</option>
+                        <option value="India">India</option>
+                        <option value="Other">Portugal</option>
+                    </select>
+                </div>
+
+                 <!-- Status Filter  -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <select id="status-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-accent-500 focus:border-accent-500">
+                        <option value="">All Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Deprecated">Deprecated</option>
+                    </select>
+                </div>
+
+                 <!-- Size Filter  -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Size</label>
+                    <select id="size-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-accent-500 focus:border-accent-500">
+                        <option value="">All Sizes</option>
+                        <option value="Small">Small (&lt;1GB)</option>
+                        <option value="Medium">Medium (1-10GB)</option>
+                        <option value="Large">Large (&gt;10GB)</option>
+                    </select>
+                </div>
+            </div>
+
+             <!-- View Toggle and Sort  -->
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600">View:</span>
+                    <div class="flex bg-gray-100 rounded-lg p-1">
+                        <button id="grid-view" class="px-3 py-1 rounded bg-white shadow-sm text-sm font-medium">Grid</button>
+                        <button id="list-view" class="px-3 py-1 rounded text-sm font-medium text-gray-600">List</button>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-600">Sort by:</span>
+                    <select id="sort-select" class="px-3 py-1 border border-gray-300 rounded-md text-sm">
+                        <option value="newest">Newest</option>
+                        <option value="updated">Recently Updated</option>
+                        <option value="size">Size</option>
+                        <option value="name">Name</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+         <!-- Results Count  -->
+        <div class="mb-6">
+            <p class="text-gray-600"><span id="results-count">12</span> datasets found</p>
+        </div>
+
+         <!-- Dataset Grid  -->
+        <div id="datasets-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+             Datasets will be populated by JavaScript 
+        </div>
+
+         <!-- No Results  -->
+        <div id="no-results" class="hidden text-center py-12">
+            <div class="text-gray-400 mb-4">
+                <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">No datasets found</h3>
+            <p class="text-gray-600">Try adjusting your search criteria or filters</p>
+        </div>
+    </div>
+
+    <script>
+        // Dataset data
+        const datasets = [
+            {
+                id: 'nyc-taxi-2023',
+                title: 'NYC Taxi Trips 2023',
+                description: 'Complete taxi trip records from New York City including pickup/dropoff locations, timestamps, and fare information.',
+                domain: 'Transportation',
+                country: 'USA',
+                city: 'New York',
+                status: 'Active',
+                size: 'Large',
+                sizeBytes: 850000000000,
+                tags: ['Transportation', 'Geospatial', 'Taxi', 'NYC'],
+                lastUpdated: '2024-01-15',
+                created: '2024-01-01'
+            },
+            {
+                id: 'porto-taxi-trajectory',
+                title: 'Porto Taxi Trajectory',
+                description: 'An accurate dataset describing a complete year of the trajectories for all the 442 taxis running in the city of Porto, in Portugal.',
+                domain: 'Transportation',
+                country: 'Portugal',
+                city: 'Porto',
+                status: 'Active',
+                size: 'Medium',
+                sizeBytes: 5000000000,
+                tags: ['Public Transit', 'Real-time', 'Bus', 'London'],
+                lastUpdated: '2024-01-10',
+                created: '2023-12-01'
+            },
+            {
+                id: 'singapore-traffic',
+                title: 'Singapore Traffic Sensors',
+                description: 'Traffic flow data from 1,200+ sensors across Singapore, including vehicle counts and speed measurements.',
+                domain: 'Traffic',
+                country: 'Singapore',
+                city: 'Singapore',
+                status: 'Active',
+                size: 'Large',
+                sizeBytes: 1200000000000,
+                tags: ['Traffic', 'IoT', 'Sensors', 'Singapore'],
+                lastUpdated: '2024-01-12',
+                created: '2023-11-15'
+            },
+            {
+                id: 'nyc-traffic-flow-2023',
+                title: 'NYC Traffic Flow 2023',
+                description: 'Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations.',
+                domain: 'Traffic',
+                country: 'USA',
+                city: 'New York',
+                status: 'Active',
+                size: 'Medium',
+                sizeBytes: 450000000,
+                tags: ['Traffic', 'Weather', 'Sensors', 'NYC'],
+                lastUpdated: '2024-01-08',
+                created: '2023-12-15'
+            },
+            {
+                id: 'berlin-bike-sharing',
+                title: 'Berlin Bike Sharing 2023',
+                description: 'Complete bike sharing usage data from Berlin including station locations, trip durations, and user patterns.',
+                domain: 'Mobility',
+                country: 'Germany',
+                city: 'Berlin',
+                status: 'Active',
+                size: 'Medium',
+                sizeBytes: 2800000000,
+                tags: ['Bike Sharing', 'Mobility', 'Sustainability', 'Berlin'],
+                lastUpdated: '2024-01-05',
+                created: '2023-11-01'
+            },
+            {
+                id: 'tokyo-metro-ridership',
+                title: 'Tokyo Metro Ridership',
+                description: 'Historical ridership data from Tokyo Metro system with station-level passenger counts and peak hour analysis.',
+                domain: 'Public Transit',
+                country: 'Japan',
+                city: 'Tokyo',
+                status: 'Active',
+                size: 'Large',
+                sizeBytes: 15000000000,
+                tags: ['Metro', 'Ridership', 'Public Transit', 'Tokyo'],
+                lastUpdated: '2024-01-03',
+                created: '2023-10-01'
+            },
+            {
+                id: 'paris-parking-sensors',
+                title: 'Paris Smart Parking',
+                description: 'Real-time parking availability data from smart sensors across Paris parking facilities and street parking.',
+                domain: 'Transportation',
+                country: 'France',
+                city: 'Paris',
+                status: 'Active',
+                size: 'Small',
+                sizeBytes: 800000000,
+                tags: ['Parking', 'IoT', 'Smart City', 'Paris'],
+                lastUpdated: '2024-01-14',
+                created: '2023-12-20'
+            },
+            {
+                id: 'amsterdam-cycling-routes',
+                title: 'Amsterdam Cycling Routes',
+                description: 'Comprehensive cycling route data including bike lane usage, traffic counts, and route optimization metrics.',
+                domain: 'Mobility',
+                country: 'Netherlands',
+                city: 'Amsterdam',
+                status: 'Active',
+                size: 'Medium',
+                sizeBytes: 1200000000,
+                tags: ['Cycling', 'Routes', 'Mobility', 'Amsterdam'],
+                lastUpdated: '2024-01-11',
+                created: '2023-11-10'
+            },
+            {
+                id: 'sydney-ferry-operations',
+                title: 'Sydney Ferry Operations',
+                description: 'Ferry schedule adherence, passenger counts, and route performance data from Sydney Harbour ferry network.',
+                domain: 'Public Transit',
+                country: 'Australia',
+                city: 'Sydney',
+                status: 'Active',
+                size: 'Small',
+                sizeBytes: 650000000,
+                tags: ['Ferry', 'Maritime', 'Public Transit', 'Sydney'],
+                lastUpdated: '2024-01-09',
+                created: '2023-12-05'
+            },
+            {
+                id: 'barcelona-scooter-sharing',
+                title: 'Barcelona E-Scooter Sharing',
+                description: 'Electric scooter sharing usage patterns, trip data, and charging station utilization across Barcelona.',
+                domain: 'Mobility',
+                country: 'Spain',
+                city: 'Barcelona',
+                status: 'Active',
+                size: 'Medium',
+                sizeBytes: 1800000000,
+                tags: ['E-Scooter', 'Sharing', 'Electric', 'Barcelona'],
+                lastUpdated: '2024-01-07',
+                created: '2023-11-25'
+            },
+            {
+                id: 'toronto-streetcar-delays',
+                title: 'Toronto Streetcar Delays',
+                description: 'Historical delay data for Toronto streetcar system with incident analysis and weather correlation.',
+                domain: 'Public Transit',
+                country: 'Canada',
+                city: 'Toronto',
+                status: 'Deprecated',
+                size: 'Small',
+                sizeBytes: 450000000,
+                tags: ['Streetcar', 'Delays', 'Public Transit', 'Toronto'],
+                lastUpdated: '2023-12-01',
+                created: '2023-06-01'
+            },
+            {
+                id: 'mumbai-auto-rickshaw',
+                title: 'Mumbai Auto-Rickshaw GPS',
+                description: 'GPS tracking data from auto-rickshaws in Mumbai including route patterns and fare analysis.',
+                domain: 'Transportation',
+                country: 'India',
+                city: 'Mumbai',
+                status: 'Active',
+                size: 'Large',
+                sizeBytes: 8500000000,
+                tags: ['Auto-Rickshaw', 'GPS', 'Transportation', 'Mumbai'],
+                lastUpdated: '2024-01-13',
+                created: '2023-10-15'
+            }
+        ];
+
+        // Initialize Fuse.js for search
+        const fuse = new Fuse(datasets, {
+            keys: ['title', 'description', 'tags', 'domain', 'city'],
+            threshold: 0.3
+        });
+
+        let currentView = 'grid';
+        let filteredDatasets = [...datasets];
+
+        // DOM elements
+        const searchInput = document.getElementById('search-input');
+        const domainFilter = document.getElementById('domain-filter');
+        const countryFilter = document.getElementById('country-filter');
+        const statusFilter = document.getElementById('status-filter');
+        const sizeFilter = document.getElementById('size-filter');
+        const sortSelect = document.getElementById('sort-select');
+        const gridViewBtn = document.getElementById('grid-view');
+        const listViewBtn = document.getElementById('list-view');
+        const datasetsContainer = document.getElementById('datasets-container');
+        const resultsCount = document.getElementById('results-count');
+        const noResults = document.getElementById('no-results');
+
+        // Event listeners
+        searchInput.addEventListener('input', handleSearch);
+        domainFilter.addEventListener('change', applyFilters);
+        countryFilter.addEventListener('change', applyFilters);
+        statusFilter.addEventListener('change', applyFilters);
+        sizeFilter.addEventListener('change', applyFilters);
+        sortSelect.addEventListener('change', applyFilters);
+        gridViewBtn.addEventListener('click', () => setView('grid'));
+        listViewBtn.addEventListener('click', () => setView('list'));
+
+        function handleSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                const results = fuse.search(query);
+                filteredDatasets = results.map(result => result.item);
+            } else {
+                filteredDatasets = [...datasets];
+            }
+            applyFilters();
+        }
+
+        function applyFilters() {
+            let filtered = searchInput.value.trim() ? filteredDatasets : [...datasets];
+
+            // Apply filters
+            if (domainFilter.value) {
+                filtered = filtered.filter(d => d.domain === domainFilter.value);
+            }
+            if (countryFilter.value) {
+                filtered = filtered.filter(d => d.country === countryFilter.value);
+            }
+            if (statusFilter.value) {
+                filtered = filtered.filter(d => d.status === statusFilter.value);
+            }
+            if (sizeFilter.value) {
+                filtered = filtered.filter(d => d.size === sizeFilter.value);
+            }
+
+            // Apply sorting
+            const sortBy = sortSelect.value;
+            filtered.sort((a, b) => {
+                switch (sortBy) {
+                    case 'newest':
+                        return new Date(b.created) - new Date(a.created);
+                    case 'updated':
+                        return new Date(b.lastUpdated) - new Date(a.lastUpdated);
+                    case 'size':
+                        return b.sizeBytes - a.sizeBytes;
+                    case 'name':
+                        return a.title.localeCompare(b.title);
+                    default:
+                        return 0;
+                }
+            });
+
+            filteredDatasets = filtered;
+            renderDatasets();
+        }
+
+        function setView(view) {
+            currentView = view;
+            if (view === 'grid') {
+                gridViewBtn.classList.add('bg-white', 'shadow-sm');
+                gridViewBtn.classList.remove('text-gray-600');
+                listViewBtn.classList.remove('bg-white', 'shadow-sm');
+                listViewBtn.classList.add('text-gray-600');
+                datasetsContainer.className = 'grid md:grid-cols-2 lg:grid-cols-3 gap-6';
+            } else {
+                listViewBtn.classList.add('bg-white', 'shadow-sm');
+                listViewBtn.classList.remove('text-gray-600');
+                gridViewBtn.classList.remove('bg-white', 'shadow-sm');
+                gridViewBtn.classList.add('text-gray-600');
+                datasetsContainer.className = 'space-y-4';
+            }
+            renderDatasets();
+        }
+
+        function renderDatasets() {
+            resultsCount.textContent = filteredDatasets.length;
+            
+            if (filteredDatasets.length === 0) {
+                datasetsContainer.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            
+            datasetsContainer.innerHTML = filteredDatasets.map(dataset => {
+                const statusColor = dataset.status === 'Active' ? 'green' : 'red';
+                const sizeColor = dataset.size === 'Large' ? 'red' : dataset.size === 'Medium' ? 'yellow' : 'blue';
+                
+                if (currentView === 'grid') {
+                    return `
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-${statusColor}-100 text-${statusColor}-800 text-xs font-medium px-2.5 py-0.5 rounded">${dataset.status}</span>
+                                <span class="text-sm text-gray-500">${dataset.size}</span>
+                            </div>
+                            <h3 class="text-xl font-semibold text-primary-900 mb-2">${dataset.title}</h3>
+                            <p class="text-gray-600 mb-4">${dataset.description}</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${dataset.tags.slice(0, 3).map(tag => `
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${tag}</span>
+                                `).join('')}
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">${dataset.city}, ${dataset.country}</span>
+                                <a href="/datasets/${dataset.id}/" class="text-accent-500 hover:text-accent-600 font-medium">View Details →</a>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <h3 class="text-xl font-semibold text-primary-900">${dataset.title}</h3>
+                                        <span class="bg-${statusColor}-100 text-${statusColor}-800 text-xs font-medium px-2.5 py-0.5 rounded">${dataset.status}</span>
+                                        <span class="bg-${sizeColor}-100 text-${sizeColor}-800 text-xs font-medium px-2.5 py-0.5 rounded">${dataset.size}</span>
+                                    </div>
+                                    <p class="text-gray-600 mb-3">${dataset.description}</p>
+                                    <div class="flex flex-wrap gap-2 mb-3">
+                                        ${dataset.tags.map(tag => `
+                                            <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">${tag}</span>
+                                        `).join('')}
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                        ${dataset.city}, ${dataset.country} • Updated ${new Date(dataset.lastUpdated).toLocaleDateString()}
+                                    </div>
+                                </div>
+                                <div class="ml-6">
+                                    <a href="/datasets/${dataset.id}/" class="bg-accent-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-600 transition-colors">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        // Initial render
+        renderDatasets();
+    </script>
+</body>
+</html>
