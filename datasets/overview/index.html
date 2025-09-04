@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dataset Overview - Urban Mobility Datasets</title>
-    <meta name="description" content="Comprehensive overview of all urban mobility datasets with detailed metadata and export capabilities.">
+    <title>Dataset Overview - Urban Datasets</title>
+    <meta name="description" content="Comprehensive overview of all Urban Datasets with detailed metadata and export capabilities.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,12 +30,12 @@
     </script>
 </head>
 <body class="bg-gray-50 text-gray-900 font-sans">
-     Navigation 
+     <!-- Navigation  -->
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <a href="/" class="text-xl font-bold text-primary-900">Urban Mobility Datasets</a>
+                    <a href="/" class="text-xl font-bold text-primary-900">Urban Datasets</a>
                 </div>
                 <div class="hidden md:flex space-x-8">
                     <a href="/" class="text-gray-700 hover:text-primary-600 transition-colors">Home</a>
@@ -47,18 +47,18 @@
     </nav>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-         Header 
+         <!-- Header  -->
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-primary-900 mb-4">Dataset Overview</h1>
             <p class="text-gray-600 mb-6">Comprehensive overview of all datasets with detailed metadata and export capabilities</p>
             
-             Export Button 
+             <!-- Export Button  -->
             <button id="export-csv" class="bg-accent-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-accent-600 transition-colors">
                 Export as CSV
             </button>
         </div>
 
-         Filters 
+         <!-- Filters  -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -99,7 +99,7 @@
             </div>
         </div>
 
-         Table 
+         <!-- Table  -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -115,7 +115,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body" class="bg-white divide-y divide-gray-200">
-                         Table rows will be populated by JavaScript 
+                         <!-- Table rows will be populated by JavaScript  -->
                     </tbody>
                 </table>
             </div>
