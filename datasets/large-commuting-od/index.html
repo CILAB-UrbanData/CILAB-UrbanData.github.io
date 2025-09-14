@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Porto Taxi Trajectory - DataHub</title>
-    <meta name="description"
-        content="Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations">
+    <title>NYC Traffic Flow 2023 - DataHub</title>
+    <meta name="description" content="Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -31,7 +29,6 @@
         }
     </script>
 </head>
-
 <body class="bg-gray-50 text-gray-900 font-sans">
     <!-- Navigation -->
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -42,10 +39,8 @@
                 </div>
                 <div class="hidden md:flex space-x-8">
                     <a href="/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Home</a>
-                    <a href="/datasets/"
-                        class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Browse Datasets</a>
-                    <a href="/datasets/overview/"
-                        class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Overview</a>
+                    <a href="/datasets/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Browse Datasets</a>
+                    <a href="/datasets/overview/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Overview</a>
                 </div>
             </div>
         </div>
@@ -67,7 +62,7 @@
                 <li aria-current="page">
                     <div class="flex items-center">
                         <span class="mx-2 text-gray-400">/</span>
-                        <span class="text-gray-500">Porto Taxi Trajectory</span>
+                        <span class="text-gray-500">NYC Traffic Flow 2023</span>
                     </div>
                 </li>
             </ol>
@@ -78,16 +73,13 @@
             <div class="flex items-start justify-between mb-6">
                 <div>
                     <div class="flex items-center gap-4 mb-4">
-                        <span
-                            class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
-                        <span
-                            class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
                     </div>
-                    <h1 class="text-4xl font-bold text-primary-900 mb-4">Porto Taxi Trajectory</h1>
+                    <h1 class="text-4xl font-bold text-primary-900 mb-4">NYC Traffic Flow 2023</h1>
                     <p class="text-xl text-gray-600 max-w-4xl">
-                        Comprehensive traffic flow data from NYC intersections with real-time sensor readings and
-                        weather correlations.
-                        This dataset provides detailed insights into urban traffic patterns across all five boroughs.
+                        LargeCommutingOD integrates data from the U.S. Census Bureau (commuting OD, sociodemographics, boundaries) and OpenStreetMap (POIs) with spatial feature correlations.
+                        This dataset delivers detailed insights into urban commuting patterns across 3,333 diverse U.S. areas (metropolitans, towns, rural regions).
                     </p>
                 </div>
             </div>
@@ -118,29 +110,19 @@
             <!-- Tab Navigation -->
             <div class="border-b border-gray-200">
                 <nav class="-mb-px flex space-x-8 px-8">
-                    <button
-                        class="tab-button active py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600"
-                        data-tab="overview">
+                    <button class="tab-button active py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600" data-tab="overview">
                         Overview
                     </button>
-                    <button
-                        class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                        data-tab="metadata">
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="metadata">
                         Metadata
                     </button>
-                    <button
-                        class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                        data-tab="download">
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="download">
                         Download
                     </button>
-                    <button
-                        class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                        data-tab="schema">
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="schema">
                         Schema
                     </button>
-                    <button
-                        class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                        data-tab="citation">
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="citation">
                         Citation
                     </button>
                 </nav>
@@ -153,18 +135,18 @@
                     <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
                     <div class="prose max-w-none text-gray-600 mb-8">
                         <p class="mb-4">
-                            We have provided an accurate dataset describing a complete year (from 01/07/2013 to
-                            30/06/2014) of the trajectories for all the 442 taxis running in the city of Porto, in
-                            Portugal (i.e. one CSV file named "train.csv"). These taxis operate through a taxi dispatch
-                            central, using mobile data terminals installed in the vehicles. We categorize each ride into
-                            three categories: A) taxi central based, B) stand-based or C) non-taxi central based. For
-                            the first, we provide an anonymized id, when such information is available from the
-                            telephone call. The last two categories refer to services that were demanded directly to the
-                            taxi drivers on a B) taxi stand or on a C) random street.
+                            This comprehensive dataset captures traffic flow patterns across New York City's major intersections throughout 2023. 
+                            The data includes real-time sensor readings from over 1,200 intersection points across all five boroughs, 
+                            providing unprecedented insight into urban mobility patterns.
                         </p>
                         <p class="mb-4">
+                            Each record contains detailed information about vehicle counts, traffic speeds, intersection coordinates, 
+                            weather conditions, and temporal metadata. The dataset has been processed to remove personally identifiable 
+                            information while maintaining statistical accuracy for research purposes.
                         </p>
                         <p>
+                            This dataset is particularly valuable for urban planning research, traffic optimization studies, 
+                            and machine learning applications focused on transportation systems.
                         </p>
                     </div>
 
@@ -173,18 +155,12 @@
                         <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Timestamp</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Intersection ID</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vehicle
-                                        Count</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Avg
-                                        Speed (mph)</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weather
-                                    </th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Borough
-                                    </th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Intersection ID</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vehicle Count</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Avg Speed (mph)</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weather</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Borough</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -226,7 +202,7 @@
                                 <tbody class="divide-y divide-gray-200">
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Title</td>
-                                        <td class="py-3 text-sm text-gray-900">Porto Taxi Trajectory</td>
+                                        <td class="py-3 text-sm text-gray-900">NYC Traffic Flow 2023</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
@@ -287,14 +263,13 @@
                 <!-- Download Tab -->
                 <div id="download-tab" class="tab-content hidden">
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">Download Options</h3>
-
+                    
                     <div class="grid md:grid-cols-2 gap-8">
                         <!-- Original Dataset -->
                         <div class="border border-gray-200 rounded-lg p-6">
                             <h4 class="text-lg font-semibold text-primary-900 mb-4">Original Dataset</h4>
-                            <p class="text-gray-600 mb-4">Raw data as collected from NYC DOT sensors with minimal
-                                processing.</p>
-
+                            <p class="text-gray-600 mb-4">Raw data as collected from NYC DOT sensors with minimal processing.</p>
+                            
                             <div class="space-y-3 mb-6">
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-500">Format:</span>
@@ -309,18 +284,17 @@
                                     <span class="text-gray-900 font-mono text-xs">a1b2c3d4e5f6...</span>
                                 </div>
                             </div>
-
-                            <a href=https://tianchi.aliyun.com/dataset/94216 download="Porto.csv" class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors text-center block">
-        Download Original (CSV)
-    </a>
+                            
+                            <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                Download Original (CSV)
+                            </button>
                         </div>
 
                         <!-- Processed Dataset -->
                         <div class="border border-gray-200 rounded-lg p-6">
                             <h4 class="text-lg font-semibold text-primary-900 mb-4">Processed Dataset</h4>
-                            <p class="text-gray-600 mb-4">Cleaned and normalized data with additional derived features.
-                            </p>
-
+                            <p class="text-gray-600 mb-4">Cleaned and normalized data with additional derived features.</p>
+                            
                             <div class="space-y-3 mb-6">
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-500">Format:</span>
@@ -335,14 +309,12 @@
                                     <span class="text-gray-900 font-mono text-xs">f6e5d4c3b2a1...</span>
                                 </div>
                             </div>
-
+                            
                             <div class="space-y-2">
-                                <button
-                                    class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                                     Download Processed (JSON)
                                 </button>
-                                <button
-                                    class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                <button class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                                     Download Processed (Parquet)
                                 </button>
                             </div>
@@ -363,19 +335,15 @@
                 <!-- Schema Tab -->
                 <div id="schema-tab" class="tab-content hidden">
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
-
+                    
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field
-                                        Name</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data
-                                        Type</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Description</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example
-                                    </th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -394,30 +362,26 @@
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-medium text-gray-900">vehicle_count</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">integer</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Number of vehicles in 15-minute window
-                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Number of vehicles in 15-minute window</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">247</td>
                                 </tr>
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-medium text-gray-900">avg_speed_mph</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Average vehicle speed in miles per hour
-                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Average vehicle speed in miles per hour</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">12.3</td>
                                 </tr>
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-medium text-gray-900">weather_condition</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Weather condition during measurement
-                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Weather condition during measurement</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">Clear, Rain, Snow, Fog</td>
                                 </tr>
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-medium text-gray-900">borough</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">string</td>
                                     <td class="px-4 py-3 text-sm text-gray-600">NYC borough location</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">Manhattan, Brooklyn, Queens, Bronx,
-                                        Staten Island</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">Manhattan, Brooklyn, Queens, Bronx, Staten Island</td>
                                 </tr>
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-medium text-gray-900">latitude</td>
@@ -439,22 +403,21 @@
                 <!-- Citation Tab -->
                 <div id="citation-tab" class="tab-content hidden">
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">How to Cite</h3>
-
+                    
                     <div class="space-y-8">
                         <!-- BibTeX -->
                         <div>
                             <h4 class="text-lg font-semibold text-primary-900 mb-3">BibTeX</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
                                 <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">@dataset{nyc_traffic_2023,
-  title = {Porto Taxi Trajectory},
+  title = {NYC Traffic Flow 2023},
   author = {NYC Department of Transportation},
   year = {2023},
   publisher = {DataHub},
   url = {https://datahub.example.com/datasets/nyc-traffic-flow-2023},
   note = {Accessed: 2024-01-15}
 }</pre>
-                                <button onclick="copyToClipboard('bibtex-citation')"
-                                    class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                                <button onclick="copyToClipboard('bibtex-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
                                 </button>
                             </div>
@@ -465,12 +428,10 @@
                             <h4 class="text-lg font-semibold text-primary-900 mb-3">APA Style</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
                                 <p class="text-sm text-gray-800" id="apa-citation">
-                                    NYC Department of Transportation. (2023). <em>Porto Taxi Trajectory</em> [Dataset].
-                                    DataHub.
+                                    NYC Department of Transportation. (2023). <em>NYC Traffic Flow 2023</em> [Dataset]. DataHub. 
                                     https://datahub.example.com/datasets/nyc-traffic-flow-2023
                                 </p>
-                                <button onclick="copyToClipboard('apa-citation')"
-                                    class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                                <button onclick="copyToClipboard('apa-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
                                 </button>
                             </div>
@@ -481,11 +442,10 @@
                             <h4 class="text-lg font-semibold text-primary-900 mb-3">Chicago Style</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
                                 <p class="text-sm text-gray-800" id="chicago-citation">
-                                    NYC Department of Transportation. "Porto Taxi Trajectory." Dataset. DataHub, 2023.
+                                    NYC Department of Transportation. "NYC Traffic Flow 2023." Dataset. DataHub, 2023. 
                                     https://datahub.example.com/datasets/nyc-traffic-flow-2023.
                                 </p>
-                                <button onclick="copyToClipboard('chicago-citation')"
-                                    class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                                <button onclick="copyToClipboard('chicago-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
                                 </button>
                             </div>
@@ -529,14 +489,14 @@
         function copyToClipboard(elementId) {
             const element = document.getElementById(elementId);
             const text = element.textContent || element.innerText;
-
+            
             navigator.clipboard.writeText(text).then(() => {
                 // Show feedback
                 const button = element.parentElement.querySelector('button');
                 const originalText = button.textContent;
                 button.textContent = 'Copied!';
                 button.classList.add('bg-green-100', 'text-green-700');
-
+                
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.classList.remove('bg-green-100', 'text-green-700');
@@ -548,5 +508,4 @@
         document.addEventListener('DOMContentLoaded', initTabs);
     </script>
 </body>
-
 </html>
