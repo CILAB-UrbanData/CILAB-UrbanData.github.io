@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>San Francisco Map-Matched Taxi Trajectories (DRPK) - Urban Datasets</title>
-  <meta name="description" content="Map-matched taxi trajectories on an OpenStreetMap road network for San Francisco (2008-05-17 to 2008-06-10). sf_data size ~1.07GB." />
+  <title>San Francisco Map-Matched Taxi Trajectories - Urban Datasets</title>
+  <meta name="description" content="Map-matched taxi trajectories on an OpenStreetMap road network for San Francisco (sf_data). 314,507 trajectories; 26,659 segments; 2008-05-17 to 2008-06-10." />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -60,13 +60,13 @@
         <li aria-current="page">
           <div class="flex items-center">
             <span class="mx-2 text-gray-400">/</span>
-            <span class="text-gray-500">SF Map-Matched Taxi Trajectories (DRPK)</span>
+            <span class="text-gray-500">San Francisco Map-Matched Taxi Trajectories</span>
           </div>
         </li>
       </ol>
     </nav>
 
-    <!-- Dataset Header -->
+    <!-- Header -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-8">
       <div class="flex items-start justify-between mb-6">
         <div>
@@ -75,82 +75,70 @@
             <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
             <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">Map-Matched</span>
           </div>
-          <h1 class="text-4xl font-bold text-primary-900 mb-4">
-            San Francisco Map-Matched Taxi Trajectories (DRPK)
-          </h1>
+          <h1 class="text-4xl font-bold text-primary-900 mb-4">San Francisco Map-Matched Taxi Trajectories</h1>
           <p class="text-xl text-gray-600 max-w-4xl">
-            Taxi trajectories in San Francisco mapped onto an OpenStreetMap road network as sequences of road segments with timestamps.
-            This page documents the San Francisco subset (<code>sf_data</code>) in the DRPK preprocessed bundle.
+            Map-matched taxi trajectories represented as a headerless CSV with serialized lists
+            (<strong>offsets</strong> + <strong>road segment sequence</strong>), paired with an OpenStreetMap-derived road network
+            (<code>map/nodes.shp</code>, <code>map/edges.shp</code>).
+            This page documents the <code>sf_data</code> subset from the provided preprocessed bundle.
           </p>
         </div>
       </div>
 
-      <!-- Key Facts Cards -->
+      <!-- Key Facts -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div class="bg-gray-50 rounded-lg p-4">
           <div class="text-2xl font-bold text-accent-500 mb-1">314,507</div>
           <div class="text-sm text-gray-600">Trajectories</div>
         </div>
         <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">26,659</div>
+          <div class="text-sm text-gray-600">Road Segments (edges)</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">2008-05-17 → 2008-06-10</div>
+          <div class="text-sm text-gray-600">Time Range (UTC)</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
           <div class="text-2xl font-bold text-accent-500 mb-1">~1.07 GB</div>
           <div class="text-sm text-gray-600">sf_data Size</div>
-        </div>
-        <div class="bg-gray-50 rounded-lg p-4">
-          <div class="text-2xl font-bold text-accent-500 mb-1">26,659</div>
-          <div class="text-sm text-gray-600">OSM Segments</div>
-        </div>
-        <div class="bg-gray-50 rounded-lg p-4">
-          <div class="text-2xl font-bold text-accent-500 mb-1">2008</div>
-          <div class="text-sm text-gray-600">Year (Coverage)</div>
         </div>
       </div>
     </div>
 
-    <!-- Tabbed Content -->
+    <!-- Tabs -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-      <!-- Tab Navigation -->
       <div class="border-b border-gray-200">
         <nav class="-mb-px flex space-x-8 px-8">
-          <button class="tab-button active py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600" data-tab="overview">
-            Overview
-          </button>
-          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="metadata">
-            Metadata
-          </button>
-          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="download">
-            Download
-          </button>
-          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="schema">
-            Schema
-          </button>
-          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="citation">
-            Citation
-          </button>
+          <button class="tab-button active py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600" data-tab="overview">Overview</button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="metadata">Metadata</button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="download">Download</button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="schema">Schema</button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="citation">Citation</button>
         </nav>
       </div>
 
-      <!-- Tab Content -->
       <div class="p-8">
-        <!-- Overview Tab -->
+        <!-- Overview -->
         <div id="overview-tab" class="tab-content">
           <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
           <div class="prose max-w-none text-gray-600 mb-8">
             <p class="mb-4">
-              This dataset contains map-matched taxi trajectories on the San Francisco road network.
-              Each trajectory is represented as a sequence of road segment IDs with associated timestamps (and related motion attributes).
+              The download link contains multiple cities. For this dataset page, we use only <strong><code>sf_data</code></strong>.
+              Trajectories are map-matched to an OpenStreetMap road network and stored as sequences of road segments with timestamps.
             </p>
             <p class="mb-4">
-              The data follows the DRPK preprocessing format: an <strong>OSM-derived road graph</strong> (nodes/edges)
-              plus trajectory splits (train/valid/test).
+              File structure (within <code>sf_data</code>): <code>map/nodes.shp</code>, <code>map/edges.shp</code>,
+              and trajectory splits <code>traj_train.csv</code>, <code>traj_valid.csv</code>, <code>traj_test.csv</code>.
             </p>
             <p class="mb-4">
-              Coverage: <strong>2008-05-17</strong> to <strong>2008-06-10</strong> (25 days), with <strong>314,507</strong> trajectories.
-              The <code>sf_data</code> folder size is <strong>1,070,351,564 bytes (~1.07 GB)</strong>.
+              Computed statistics (UTC): <strong>min</strong> 2008-05-17T09:59:09.048Z, <strong>max</strong> 2008-06-10T09:23:21.931Z.
+              Road segments (edges): <strong>26,659</strong>. Total trajectories: <strong>314,507</strong>.
             </p>
           </div>
         </div>
 
-        <!-- Metadata Tab -->
+        <!-- Metadata -->
         <div id="metadata-tab" class="tab-content hidden">
           <h3 class="text-xl font-semibold text-primary-900 mb-6">Dataset Metadata</h3>
           <div class="grid md:grid-cols-2 gap-8">
@@ -159,7 +147,7 @@
                 <tbody class="divide-y divide-gray-200">
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Title</td>
-                    <td class="py-3 text-sm text-gray-900">San Francisco Map-Matched Taxi Trajectories (DRPK)</td>
+                    <td class="py-3 text-sm text-gray-900">San Francisco Map-Matched Taxi Trajectories</td>
                   </tr>
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
@@ -170,16 +158,14 @@
                     <td class="py-3 text-sm text-gray-900">San Francisco, USA</td>
                   </tr>
                   <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
-                    <td class="py-3 text-sm text-gray-900">2008-05-17 to 2008-06-10</td>
+                    <td class="py-3 text-sm font-medium text-gray-500">Subset</td>
+                    <td class="py-3 text-sm text-gray-900"><code>sf_data</code></td>
                   </tr>
                   <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Data Type</td>
-                    <td class="py-3 text-sm text-gray-900">Map-matched taxi trajectories on road segments</td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
-                    <td class="py-3 text-sm text-gray-900">Static</td>
+                    <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage (UTC)</td>
+                    <td class="py-3 text-sm text-gray-900">
+                      2008-05-17 09:59:09.048 → 2008-06-10 09:23:21.931
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -188,28 +174,28 @@
               <table class="w-full">
                 <tbody class="divide-y divide-gray-200">
                   <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Format</td>
-                    <td class="py-3 text-sm text-gray-900">CSV (traj), Shapefile (nodes/edges)</td>
+                    <td class="py-3 text-sm font-medium text-gray-500">Trajectory Files</td>
+                    <td class="py-3 text-sm text-gray-900">traj_train.csv / traj_valid.csv / traj_test.csv</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Road Network</td>
+                    <td class="py-3 text-sm text-gray-900">map/nodes.shp, map/edges.shp</td>
                   </tr>
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Trajectories</td>
                     <td class="py-3 text-sm text-gray-900">314,507</td>
                   </tr>
                   <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Road Segments</td>
+                    <td class="py-3 text-sm font-medium text-gray-500">Road Segments (edges)</td>
                     <td class="py-3 text-sm text-gray-900">26,659</td>
                   </tr>
                   <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">File Size (sf_data)</td>
+                    <td class="py-3 text-sm font-medium text-gray-500">sf_data Size</td>
                     <td class="py-3 text-sm text-gray-900">1,070,351,564 bytes (~1.07 GB)</td>
                   </tr>
                   <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Source</td>
-                    <td class="py-3 text-sm text-gray-900">DRPK preprocessed bundle (sf_data) + OpenStreetMap road network</td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">License</td>
-                    <td class="py-3 text-sm text-gray-900">Follow original trajectory source terms; OSM-derived network under ODbL</td>
+                    <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
+                    <td class="py-3 text-sm text-gray-900">Static</td>
                   </tr>
                 </tbody>
               </table>
@@ -219,12 +205,12 @@
           <div class="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <h5 class="font-medium text-yellow-900 mb-2">Note</h5>
             <p class="text-sm text-yellow-800">
-              The OneDrive link contains multiple cities. For this dataset page, we only use the <strong>sf_data</strong> subset.
+              Trajectory CSV files are headerless and include serialized lists; always parse using a real CSV parser.
             </p>
           </div>
         </div>
 
-        <!-- Download Tab -->
+        <!-- Download -->
         <div id="download-tab" class="tab-content hidden">
           <h3 class="text-xl font-semibold text-primary-900 mb-6">Download</h3>
 
@@ -232,7 +218,7 @@
             <div class="border border-gray-200 rounded-lg p-6">
               <h4 class="text-lg font-semibold text-primary-900 mb-2">Preprocessed Bundle (OneDrive)</h4>
               <p class="text-gray-600 mb-4">
-                Contains 5 cities; use folder <code>sf_data</code> for San Francisco.
+                Contains multiple cities; use folder <code>sf_data</code> for San Francisco.
               </p>
 
               <div class="space-y-3 mb-6">
@@ -242,11 +228,7 @@
                 </div>
                 <div class="flex justify-between text-sm">
                   <span class="text-gray-500">sf_data size:</span>
-                  <span class="text-gray-900">~1.07 GB</span>
-                </div>
-                <div class="flex justify-between text-sm">
-                  <span class="text-gray-500">Includes:</span>
-                  <span class="text-gray-900">map/ (nodes, edges), traj split CSVs</span>
+                  <span class="text-gray-900">1,070,351,564 bytes (~1.07 GB)</span>
                 </div>
               </div>
 
@@ -258,7 +240,7 @@
             </div>
 
             <div class="border border-gray-200 rounded-lg p-6">
-              <h4 class="text-lg font-semibold text-primary-900 mb-2">Documentation (DRPK GitHub)</h4>
+              <h4 class="text-lg font-semibold text-primary-900 mb-2">Format Documentation</h4>
               <p class="text-gray-600 mb-4">
                 Data format and directory structure are described in the DRPK repository.
               </p>
@@ -272,28 +254,91 @@
           </div>
         </div>
 
-        <!-- Schema Tab -->
+        <!-- Schema -->
         <div id="schema-tab" class="tab-content hidden">
-          <h3 class="text-xl font-semibold text-primary-900 mb-6">Schema Notes</h3>
-          <div class="text-gray-600 space-y-4">
-            <p>
-              Trajectories are map-matched onto the road network. The bundle typically contains a road graph (OSM-derived) and
-              trajectory CSV splits. The exact columns depend on the DRPK preprocessing format.
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
+
+          <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p class="text-sm text-yellow-900">
+              <strong>Important:</strong> <code>traj_*.csv</code> files are <strong>headerless</strong> and have exactly <strong>4 columns</strong>.
+              Interpret fields by <strong>column position</strong>. Columns 3–4 contain serialized lists (with commas).
             </p>
-            <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p class="text-sm text-blue-900">
-                If你把 <code>sf_data</code> 里任意一个轨迹 CSV 的 <strong>header 行</strong>贴给我，我可以把这里改成像 Porto 那样的“字段表格版 Schema”。
-              </p>
-            </div>
+          </div>
+
+          <h4 class="text-lg font-semibold text-primary-900 mb-3">Trajectory files: traj_train.csv / traj_valid.csv / traj_test.csv</h4>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Column</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example (truncated)</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">1</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Moving object id (vehicle/taxi identifier).</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">edmugrip</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">2</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Trajectory id.</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">1212038019:edmugrip</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">3</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string (serialized list)</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    <strong>Offsets</strong>: serialized list of two tuples (source &amp; destination). Each tuple:
+                    <code>(distance_from_segment_start, depart_or_arrive_time, lon, lat)</code>.
+                  </td>
+                  <td class="px-4 py-3 text-sm text-gray-500">
+                    [(137.9693, 1212038019, -122.39606, 37.792731), (41.6309, 1212038170, -122.40162, 37.793008)]
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">4</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string (serialized list)</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    <strong>Segment sequence</strong>: serialized list of segment records. Each record:
+                    <code>[segment_id, enter_timestamp, average_speed, duration]</code>.
+                    The effective segment end time is <code>enter_timestamp + duration</code>.
+                  </td>
+                  <td class="px-4 py-3 text-sm text-gray-500">
+                    [[6557, 1212037972.113, 2.943, 71.205], [8965, 1212038043.318, 2.943, 15.766], ...]
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="text-lg font-semibold text-primary-900 mb-3">Road network files: map/nodes.shp &amp; map/edges.shp</h4>
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-gray-700">
+            <ul class="list-disc pl-5 space-y-1 text-sm">
+              <li><code>nodes.shp</code>: OSM node information (graph nodes).</li>
+              <li><code>edges.shp</code>: OSM edge/segment information (graph edges). Total edges in sf_data: <strong>26,659</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p class="text-sm text-blue-900">
+              Parsing tip: because columns 3–4 contain list strings with commas, use a proper CSV parser
+              (e.g., Python <code>csv</code>/<code>pandas</code>) rather than splitting by comma.
+            </p>
           </div>
         </div>
 
-        <!-- Citation Tab -->
+        <!-- Citation -->
         <div id="citation-tab" class="tab-content hidden">
-          <h3 class="text-xl font-semibold text-primary-900 mb-6">How to Cite</h3>
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Citation</h3>
           <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
             <p class="text-sm text-gray-800">
-              Please cite the DRPK repository/paper and the original San Francisco taxi trace source as required by their terms.
+              Please cite the DRPK repository/paper for the preprocessing format/pipeline if used, and follow the original data and OpenStreetMap licensing terms where applicable.
             </p>
           </div>
         </div>
@@ -330,4 +375,3 @@
   </script>
 </body>
 </html>
-
