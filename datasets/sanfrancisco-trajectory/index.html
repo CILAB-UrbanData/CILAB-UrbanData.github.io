@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>San Francisco Map-Matched Taxi Trajectories (DRPK) - Urban Datasets</title>
+  <title>San Francisco Map-Matched Taxi Trajectories - Urban Datasets</title>
   <meta name="description" content="Map-matched taxi trajectories on an OpenStreetMap road network for San Francisco (2008-05-17 to 2008-06-10). sf_data size ~1.07GB." />
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -60,7 +60,7 @@
         <li aria-current="page">
           <div class="flex items-center">
             <span class="mx-2 text-gray-400">/</span>
-            <span class="text-gray-500">SF Map-Matched Taxi Trajectories (DRPK)</span>
+            <span class="text-gray-500">San Francisco Map-Matched Taxi Trajectories</span>
           </div>
         </li>
       </ol>
@@ -76,11 +76,11 @@
             <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">Map-Matched</span>
           </div>
           <h1 class="text-4xl font-bold text-primary-900 mb-4">
-            San Francisco Map-Matched Taxi Trajectories (DRPK)
+            San Francisco Map-Matched Taxi Trajectories
           </h1>
           <p class="text-xl text-gray-600 max-w-4xl">
             Taxi trajectories in San Francisco mapped onto an OpenStreetMap road network as sequences of road segments with timestamps.
-            This page documents the San Francisco subset (<code>sf_data</code>) in the DRPK preprocessed bundle.
+            This page documents the <code>sf_data</code> subset from the DRPK preprocessed bundle.
           </p>
         </div>
       </div>
@@ -88,20 +88,20 @@
       <!-- Key Facts Cards -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div class="bg-gray-50 rounded-lg p-4">
-          <div class="text-2xl font-bold text-accent-500 mb-1">314,507</div>
-          <div class="text-sm text-gray-600">Trajectories</div>
-        </div>
-        <div class="bg-gray-50 rounded-lg p-4">
           <div class="text-2xl font-bold text-accent-500 mb-1">~1.07 GB</div>
           <div class="text-sm text-gray-600">sf_data Size</div>
         </div>
         <div class="bg-gray-50 rounded-lg p-4">
-          <div class="text-2xl font-bold text-accent-500 mb-1">26,659</div>
-          <div class="text-sm text-gray-600">OSM Segments</div>
+          <div class="text-2xl font-bold text-accent-500 mb-1">CSV + Shapefile</div>
+          <div class="text-sm text-gray-600">Format</div>
         </div>
         <div class="bg-gray-50 rounded-lg p-4">
-          <div class="text-2xl font-bold text-accent-500 mb-1">2008</div>
-          <div class="text-sm text-gray-600">Year (Coverage)</div>
+          <div class="text-2xl font-bold text-accent-500 mb-1">San Francisco</div>
+          <div class="text-sm text-gray-600">City</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">OSM</div>
+          <div class="text-sm text-gray-600">Road Network</div>
         </div>
       </div>
     </div>
@@ -136,16 +136,14 @@
           <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
           <div class="prose max-w-none text-gray-600 mb-8">
             <p class="mb-4">
-              This dataset contains map-matched taxi trajectories on the San Francisco road network.
-              Each trajectory is represented as a sequence of road segment IDs with associated timestamps (and related motion attributes).
+              This dataset contains trajectories that have been map-matched onto the San Francisco road network.
+              The road graph is derived from OpenStreetMap (nodes/edges), and trajectories are represented as sequences of road segments.
             </p>
             <p class="mb-4">
-              The data follows the DRPK preprocessing format: an <strong>OSM-derived road graph</strong> (nodes/edges)
-              plus trajectory splits (train/valid/test).
+              The download link contains 5 cities; for this page, you only need <strong><code>sf_data</code></strong>.
             </p>
             <p class="mb-4">
-              Coverage: <strong>2008-05-17</strong> to <strong>2008-06-10</strong> (25 days), with <strong>314,507</strong> trajectories.
-              The <code>sf_data</code> folder size is <strong>1,070,351,564 bytes (~1.07 GB)</strong>.
+              <strong>sf_data size:</strong> 1,070,351,564 bytes (~1.07 GB).
             </p>
           </div>
         </div>
@@ -159,7 +157,7 @@
                 <tbody class="divide-y divide-gray-200">
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Title</td>
-                    <td class="py-3 text-sm text-gray-900">San Francisco Map-Matched Taxi Trajectories (DRPK)</td>
+                    <td class="py-3 text-sm text-gray-900">San Francisco Map-Matched Taxi Trajectories</td>
                   </tr>
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
@@ -177,10 +175,6 @@
                     <td class="py-3 text-sm font-medium text-gray-500">Data Type</td>
                     <td class="py-3 text-sm text-gray-900">Map-matched taxi trajectories on road segments</td>
                   </tr>
-                  <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
-                    <td class="py-3 text-sm text-gray-900">Static</td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -189,15 +183,7 @@
                 <tbody class="divide-y divide-gray-200">
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Format</td>
-                    <td class="py-3 text-sm text-gray-900">CSV (traj), Shapefile (nodes/edges)</td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Trajectories</td>
-                    <td class="py-3 text-sm text-gray-900">314,507</td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 text-sm font-medium text-gray-500">Road Segments</td>
-                    <td class="py-3 text-sm text-gray-900">26,659</td>
+                    <td class="py-3 text-sm text-gray-900">CSV (traj) + Shapefile (road graph)</td>
                   </tr>
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">File Size (sf_data)</td>
@@ -205,7 +191,7 @@
                   </tr>
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Source</td>
-                    <td class="py-3 text-sm text-gray-900">DRPK preprocessed bundle (sf_data) + OpenStreetMap road network</td>
+                    <td class="py-3 text-sm text-gray-900">DRPK preprocessed bundle (sf_data) + OpenStreetMap</td>
                   </tr>
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">License</td>
@@ -242,11 +228,7 @@
                 </div>
                 <div class="flex justify-between text-sm">
                   <span class="text-gray-500">sf_data size:</span>
-                  <span class="text-gray-900">~1.07 GB</span>
-                </div>
-                <div class="flex justify-between text-sm">
-                  <span class="text-gray-500">Includes:</span>
-                  <span class="text-gray-900">map/ (nodes, edges), traj split CSVs</span>
+                  <span class="text-gray-900">1,070,351,564 bytes (~1.07 GB)</span>
                 </div>
               </div>
 
@@ -258,7 +240,7 @@
             </div>
 
             <div class="border border-gray-200 rounded-lg p-6">
-              <h4 class="text-lg font-semibold text-primary-900 mb-2">Documentation (DRPK GitHub)</h4>
+              <h4 class="text-lg font-semibold text-primary-900 mb-2">Documentation</h4>
               <p class="text-gray-600 mb-4">
                 Data format and directory structure are described in the DRPK repository.
               </p>
@@ -278,11 +260,11 @@
           <div class="text-gray-600 space-y-4">
             <p>
               Trajectories are map-matched onto the road network. The bundle typically contains a road graph (OSM-derived) and
-              trajectory CSV splits. The exact columns depend on the DRPK preprocessing format.
+              trajectory CSV splits. The exact columns depend on the preprocessing format.
             </p>
             <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <p class="text-sm text-blue-900">
-                If你把 <code>sf_data</code> 里任意一个轨迹 CSV 的 <strong>header 行</strong>贴给我，我可以把这里改成像 Porto 那样的“字段表格版 Schema”。
+                你把 <code>sf_data</code> 里任意一个轨迹 CSV 的 <strong>header 行</strong>贴给我，我可以把这里改成“字段表格版 Schema”（像 Porto 那种）。
               </p>
             </div>
           </div>
@@ -330,4 +312,3 @@
   </script>
 </body>
 </html>
-
