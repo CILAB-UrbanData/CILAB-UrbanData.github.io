@@ -1,1 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foursquare New York City (FS NYC) - DataHub</title>
+  <meta name="description" content="FS NYC (Foursquare New York City) trajectory subset. all_latlon.csv contains 3,079 trajectories and 66,962 points. Source derived from LSTM-TrajGAN." />
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              900: '#0f172a'
+            },
+            accent: { 500: '#8b5cf6', 600: '#7c3aed' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans">
+  <!-- Navigation -->
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="/" class="text-2xl font-bold text-primary-700">DataHub</a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+          <a href="/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Home</a>
+          <a href="/datasets/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Browse Datasets</a>
+          <a href="/datasets/overview/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Overview</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Breadcrumb -->
+    <nav class="flex mb-8" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="/" class="text-gray-700 hover:text-primary-600">Home</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <a href="/datasets/" class="text-gray-700 hover:text-primary-600">Datasets</a>
+          </div>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <span class="text-gray-500">FS NYC</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Dataset Header -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-8">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <div class="flex items-center gap-4 mb-4">
+            <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
+            <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Trajectory</span>
+          </div>
+
+          <h1 class="text-4xl font-bold text-primary-900 mb-4">Foursquare New York City (FS NYC)</h1>
+
+          <p class="text-xl text-gray-600 max-w-4xl">
+            FS NYC is a subset of the Foursquare trajectory dataset for New York City. The file
+            <code>all_latlon.csv</code> contains all trajectories (merged from the original train/test files used by the
+            LSTM‑TrajGAN project). Since you may want custom splits, this page only provides the merged file.
+            The dataset can be used as-is without additional pre-processing.
+          </p>
+        </div>
+      </div>
+
+      <!-- Key Facts Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">3,079</div>
+          <div class="text-sm text-gray-600">Trajectories</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">66,962</div>
+          <div class="text-sm text-gray-600">Points</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">NYC</div>
+          <div class="text-sm text-gray-600">City</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">CSV</div>
+          <div class="text-sm text-gray-600">Format</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabbed Content -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <!-- Tab Navigation -->
+      <div class="border-b border-gray-200">
+        <nav class="-mb-px flex space-x-8 px-8">
+          <button class="tab-button py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600" data-tab="overview">
+            Overview
+          </button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="metadata">
+            Metadata
+          </button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="download">
+            Download
+          </button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="schema">
+            Schema
+          </button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="citation">
+            Citation
+          </button>
+        </nav>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="p-8">
+        <!-- Overview Tab -->
+        <div id="overview-tab" class="tab-content">
+          <h3 class="text-xl font-semibold text-primary-900 mb-4">Files Included</h3>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+              <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">File</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Number of Trajectories</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Number of Points</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Notes</th>
+              </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-3 text-sm font-mono text-gray-900">all_latlon.csv</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">3,079</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">66,962</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    Concatenation of the original train/test splits used by LSTM‑TrajGAN.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-xl font-semibold text-primary-900 mb-4">Verification</h3>
+          <p class="text-gray-600 mb-4">
+            To verify the integrity of this dataset (from the repository root directory), run:
+          </p>
+
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative mb-2">
+            <pre class="text-sm text-gray-800 whitespace-pre-wrap font-mono" id="verify-command">python -m unittest test/test_fs_nyc.py</pre>
+            <button onclick="copyToClipboard('verify-command')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+              Copy
+            </button>
+          </div>
+
+          <p class="text-sm text-gray-500">
+            Note: You can freely re-split trajectories for your experiments (e.g., random split, time-based split, etc.).
+          </p>
+        </div>
+
+        <!-- Metadata Tab -->
+        <div id="metadata-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Dataset Metadata</h3>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <table class="w-full">
+                <tbody class="divide-y divide-gray-200">
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Title</td>
+                    <td class="py-3 text-sm text-gray-900">Foursquare New York City (FS NYC)</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
+                    <td class="py-3 text-sm text-gray-900">Trajectory / Location-based Services</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Geographic Coverage</td>
+                    <td class="py-3 text-sm text-gray-900">New York City, USA</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
+                    <td class="py-3 text-sm text-gray-900">Not specified in this snapshot</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Included File</td>
+                    <td class="py-3 text-sm text-gray-900"><span class="font-mono">all_latlon.csv</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <table class="w-full">
+                <tbody class="divide-y divide-gray-200">
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Format</td>
+                    <td class="py-3 text-sm text-gray-900">CSV</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Trajectories</td>
+                    <td class="py-3 text-sm text-gray-900">3,079</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Points</td>
+                    <td class="py-3 text-sm text-gray-900">66,962</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Derived From</td>
+                    <td class="py-3 text-sm text-gray-900">LSTM‑TrajGAN (GitHub)</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">License</td>
+                    <td class="py-3 text-sm text-gray-900">Refer to the source repository / original dataset terms</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download Tab -->
+        <div id="download-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Download</h3>
+
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-primary-900 mb-2">Merged file (recommended)</h4>
+            <p class="text-gray-600 mb-4">
+              Download the merged file containing all trajectories. You can re-split it for your own experiments.
+            </p>
+
+            <div class="space-y-3 mb-6">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">File:</span>
+                <span class="text-gray-900 font-mono">all_latlon.csv</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Trajectories:</span>
+                <span class="text-gray-900">3,079</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Points:</span>
+                <span class="text-gray-900">66,962</span>
+              </div>
+            </div>
+
+            <!-- Same-folder download (GitHub Pages) -->
+            <a href="./all_latlon.csv" download
+               class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors block text-center">
+              Download all_latlon.csv
+            </a>
+
+            <p class="mt-3 text-sm text-gray-500">
+              If your browser doesn’t auto-download, you can also view the file on GitHub:
+              <a class="text-accent-600 hover:text-accent-500 underline"
+                 target="_blank" rel="noopener noreferrer"
+                 href="https://github.com/CILAB-UrbanData/CILAB-UrbanData.github.io/blob/main/datasets/foursquare-nyc-trajectory/all_latlon.csv">
+                view on GitHub
+              </a>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Schema Tab -->
+        <div id="schema-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-4">Schema Notes</h3>
+
+          <div class="text-gray-600 space-y-4">
+            <p>
+              <span class="font-mono">all_latlon.csv</span> follows the “lat/lon trajectory” representation used by LSTM‑TrajGAN.
+              In many workflows, each row corresponds to a trajectory, and the trajectory is stored as a sequence of latitude/longitude
+              points (often encoded as a list / serialized structure).
+            </p>
+
+            <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div class="font-medium text-blue-900 mb-2">Tip</div>
+              <p class="text-sm text-blue-800">
+                If you paste the first row (or header) of <span class="font-mono">all_latlon.csv</span>, I can turn it into a precise schema table
+                like your Porto page.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Citation Tab -->
+        <div id="citation-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">How to Cite</h3>
+
+          <div class="space-y-6">
+            <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <p class="text-sm text-blue-900">
+                This FS NYC snapshot is curated from the LSTM‑TrajGAN repository and the original Foursquare-derived dataset.
+                Please cite the original source repository / dataset when publishing results, and reference this catalog entry if you
+                use the hosted snapshot.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-semibold text-primary-900 mb-3">BibTeX (catalog entry)</h4>
+              <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
+<pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">@dataset{fs_nyc_all_latlon_snapshot,
+  title     = {Foursquare New York City (FS NYC) - all\_latlon.csv (Snapshot)},
+  author    = {{CILAB UrbanData}},
+  year      = {n.d.},
+  publisher = {DataHub},
+  url       = {https://cilab-urbandata.github.io/datasets/foursquare-nyc-trajectory/},
+  note      = {Merged from the train/test latlon files used in LSTM-TrajGAN; contains 3,079 trajectories and 66,962 points.}
+}</pre>
+                <button onclick="copyToClipboard('bibtex-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function initTabs() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      // Make first tab active initially
+      tabContents.forEach((c, i) => i === 0 ? c.classList.remove('hidden') : c.classList.add('hidden'));
+      tabButtons.forEach((b, i) => {
+        if (i === 0) {
+          b.classList.remove('border-transparent', 'text-gray-500');
+          b.classList.add('border-accent-500', 'text-accent-600');
+        } else {
+          b.classList.add('border-transparent', 'text-gray-500');
+        }
+      });
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetTab = button.getAttribute('data-tab');
+
+          tabButtons.forEach(btn => {
+            btn.classList.remove('border-accent-500', 'text-accent-600');
+            btn.classList.add('border-transparent', 'text-gray-500');
+          });
+
+          tabContents.forEach(content => content.classList.add('hidden'));
+
+          button.classList.remove('border-transparent', 'text-gray-500');
+          button.classList.add('border-accent-500', 'text-accent-600');
+
+          document.getElementById(targetTab + '-tab').classList.remove('hidden');
+        });
+      });
+    }
+
+    function copyToClipboard(elementId) {
+      const element = document.getElementById(elementId);
+      const text = element.textContent || element.innerText;
+
+      navigator.clipboard.writeText(text).then(() => {
+        const button = element.parentElement.querySelector('button');
+        if (!button) return;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('bg-green-100', 'text-green-700');
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove('bg-green-100', 'text-green-700');
+        }, 2000);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initTabs);
+  </script>
+</body>
+</html>
