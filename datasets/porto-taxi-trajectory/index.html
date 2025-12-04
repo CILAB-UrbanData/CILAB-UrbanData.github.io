@@ -1,534 +1,509 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Porto Taxi Trajectory - DataHub</title>
-    <meta name="description" content="Taxi trajectory data from 442 taxis in Porto, Portugal, covering one year of GPS trajectories from July 1, 2013 to June 30, 2014.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porto Taxi Trajectory - DataHub</title>
+  <meta name="description" content="Taxi trajectory data from 442 taxis in Porto, Portugal, covering one year of GPS trajectories from 2013-07-01 to 2014-06-30." />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            500: '#64748b',
-                            600: '#475569',
-                            700: '#334155',
-                            900: '#0f172a'
-                        },
-                        accent: {
-                            500: '#8b5cf6',
-                            600: '#7c3aed'
-                        }
-                    }
-                }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              900: '#0f172a'
+            },
+            accent: {
+              500: '#8b5cf6',
+              600: '#7c3aed'
             }
+          }
         }
-    </script>
+      }
+    }
+  </script>
 </head>
+
 <body class="bg-gray-50 text-gray-900 font-sans">
-    <!-- Navigation -->
-    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-primary-700">DataHub</a>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Home</a>
-                    <a href="/datasets/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Browse Datasets</a>
-                    <a href="/datasets/overview/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Overview</a>
-                </div>
-            </div>
+  <!-- Navigation -->
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="/" class="text-2xl font-bold text-primary-700">DataHub</a>
         </div>
+        <div class="hidden md:flex space-x-8">
+          <a href="/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Home</a>
+          <a href="/datasets/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Browse Datasets</a>
+          <a href="/datasets/overview/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Overview</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Breadcrumb -->
+    <nav class="flex mb-8" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="/" class="text-gray-700 hover:text-primary-600">Home</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <a href="/datasets/" class="text-gray-700 hover:text-primary-600">Datasets</a>
+          </div>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <span class="text-gray-500">Porto Taxi Trajectory</span>
+          </div>
+        </li>
+      </ol>
     </nav>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Breadcrumb -->
-        <nav class="flex mb-8" aria-label="Breadcrumb">
-            <ol class="inline-flex items-center space-x-1 md:space-x-3">
-                <li class="inline-flex items-center">
-                    <a href="/" class="text-gray-700 hover:text-primary-600">Home</a>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <span class="mx-2 text-gray-400">/</span>
-                        <a href="/datasets/" class="text-gray-700 hover:text-primary-600">Datasets</a>
-                    </div>
-                </li>
-                <li aria-current="page">
-                    <div class="flex items-center">
-                        <span class="mx-2 text-gray-400">/</span>
-                        <span class="text-gray-500">Porto Taxi Trajectory</span>
-                    </div>
-                </li>
-            </ol>
-        </nav>
-
-        <!-- Dataset Header -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-8">
-            <div class="flex items-start justify-between mb-6">
-                <div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
-                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
-                    </div>
-                    <h1 class="text-4xl font-bold text-primary-900 mb-4">Porto Taxi Trajectory</h1>
-                    <p class="text-xl text-gray-600 max-w-4xl">
-                        GPS trajectory data from taxis operating in Porto, Portugal. Each record corresponds to a completed trip,
-                        represented as a sequence of longitude–latitude points sampled along the route, together with metadata
-                        describing how the service was requested and when the trip started.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Key Facts Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">1,710,670</div>
-                    <div class="text-sm text-gray-600">Trips</div>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">~1.8 GB</div>
-                    <div class="text-sm text-gray-600">File Size (CSV)</div>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">2013–2014</div>
-                    <div class="text-sm text-gray-600">Years</div>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">365</div>
-                    <div class="text-sm text-gray-600">Days Covered</div>
-                </div>
-            </div>
+    <!-- Dataset Header -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-8">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <div class="flex items-center gap-4 mb-4">
+            <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
+            <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
+          </div>
+          <h1 class="text-4xl font-bold text-primary-900 mb-4">Porto Taxi Trajectory</h1>
+          <p class="text-xl text-gray-600 max-w-4xl">
+            Taxi trajectory data from Porto, Portugal. Each record corresponds to a completed taxi trip and includes
+            trip metadata and a GPS trajectory represented as a polyline (a sequence of longitude/latitude points).
+            The dataset covers one full year (2013-07-01 to 2014-06-30) and supports research on trajectory mining,
+            destination prediction, and urban mobility analysis.
+          </p>
         </div>
+      </div>
 
-        <!-- Tabbed Content -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-            <!-- Tab Navigation -->
-            <div class="border-b border-gray-200">
-                <nav class="-mb-px flex space-x-8 px-8">
-                    <button class="tab-button active py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600" data-tab="overview">
-                        Overview
-                    </button>
-                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="metadata">
-                        Metadata
-                    </button>
-                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="download">
-                        Download
-                    </button>
-                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="schema">
-                        Schema
-                    </button>
-                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="citation">
-                        Citation
-                    </button>
-                </nav>
-            </div>
-
-            <!-- Tab Content -->
-            <div class="p-8">
-                <!-- Overview Tab -->
-                <div id="overview-tab" class="tab-content">
-                    <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
-                    <div class="prose max-w-none text-gray-600 mb-8">
-                        <p class="mb-4">
-                            This dataset contains one year of taxi trajectories collected from 442 taxis operating in Porto,
-                            Portugal, between July 1, 2013 and June 30, 2014. Each row corresponds to a completed trip and
-                            includes an anonymized trip identifier, taxi identifier, a start timestamp, service type indicators,
-                            and a polyline describing the GPS trajectory of the trip.
-                        </p>
-                        <p class="mb-4">
-                            The trajectory of each trip is encoded as a list of WGS84 longitude–latitude pairs sampled at
-                            regular time intervals along the route. Combined with the metadata fields, the dataset can be
-                            used to study urban mobility patterns, demand distribution, dispatch strategies, route choice,
-                            and congestion, as well as to build machine learning models for destination and travel time
-                            prediction.
-                        </p>
-                        <p>
-                            The version catalogued here is the <em>Taxi Trajectory Data</em> dataset hosted on Alibaba Cloud Tianchi,
-                            and it follows the license and terms of use specified on the Tianchi dataset page.
-                        </p>
-                    </div>
-
-                    <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview</h4>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">TRIP_ID</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">CALL_TYPE</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">ORIGIN_CALL</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">ORIGIN_STAND</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">TAXI_ID</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">TIMESTAMP</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">DAY_TYPE</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">MISSING_DATA</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">POLYLINE (truncated)</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">1372636858620000589</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">C</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">NULL</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">NULL</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">20000589</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">1372636858</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">A</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">False</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">[[ -8.6186, 41.1414 ], [ -8.6185, 41.1414 ], ...]</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">1372637303620000596</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">B</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">NULL</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">7</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">20000596</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">1372637303</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">A</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">False</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">[[ -8.6398, 41.1598 ], [ -8.6403, 41.1599 ], ...]</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">1372637000120000320</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">A</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">135492</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">NULL</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">20000320</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">1372637000</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">B</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">False</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">[[ -8.6129, 41.1404 ], [ -8.6134, 41.1404 ], ...]</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Metadata Tab -->
-                <div id="metadata-tab" class="tab-content hidden">
-                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Dataset Metadata</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <table class="w-full">
-                                <tbody class="divide-y divide-gray-200">
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Title</td>
-                                        <td class="py-3 text-sm text-gray-900">Porto Taxi Trajectory</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
-                                        <td class="py-3 text-sm text-gray-900">Transportation / Mobility</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Geographic Coverage</td>
-                                        <td class="py-3 text-sm text-gray-900">Porto, Portugal</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
-                                        <td class="py-3 text-sm text-gray-900">July 1, 2013 – June 30, 2014</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
-                                        <td class="py-3 text-sm text-gray-900">Historical dataset (no ongoing updates)</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Data Source</td>
-                                        <td class="py-3 text-sm text-gray-900">
-                                            Taxi Trajectory Data (Alibaba Cloud Tianchi, dataset ID 94216)
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div>
-                            <table class="w-full">
-                                <tbody class="divide-y divide-gray-200">
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">License</td>
-                                        <td class="py-3 text-sm text-gray-900">CC BY-SA-NC 4.0</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Format</td>
-                                        <td class="py-3 text-sm text-gray-900">CSV</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">File Size</td>
-                                        <td class="py-3 text-sm text-gray-900">1,897,314 KB (~1.8 GB)</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Trips</td>
-                                        <td class="py-3 text-sm text-gray-900">1,710,670 completed taxi trips</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Last Updated</td>
-                                        <td class="py-3 text-sm text-gray-900">March 12, 2021</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 text-sm font-medium text-gray-500">Version</td>
-                                        <td class="py-3 text-sm text-gray-900">1.0</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Download Tab -->
-                <div id="download-tab" class="tab-content hidden">
-                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Download Options</h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Original Dataset -->
-                        <div class="border border-gray-200 rounded-lg p-6">
-                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Original Dataset (Tianchi)</h4>
-                            <p class="text-gray-600 mb-4">
-                                Original taxi trajectory dataset as hosted on Alibaba Cloud Tianchi under the name
-                                <em>Taxi Trajectory Data</em>. The main file is a single CSV (train.csv) containing all trips.
-                            </p>
-                            
-                            <div class="space-y-3 mb-6">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Format:</span>
-                                    <span class="text-gray-900">CSV (train.csv)</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Size:</span>
-                                    <span class="text-gray-900">1,897,314 KB (~1.8 GB)</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Host:</span>
-                                    <span class="text-gray-900">Alibaba Cloud Tianchi</span>
-                                </div>
-                            </div>
-                            
-                            <a href="https://tianchi.aliyun.com/dataset/94216"
-                               target="_blank"
-                               rel="noopener"
-                               class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors block text-center">
-                                View Dataset on Tianchi
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Download Terms -->
-                    <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                        <h5 class="font-medium text-blue-900 mb-2">Download Terms</h5>
-                        <ul class="text-sm text-blue-800 space-y-1">
-                            <li>• Use of this dataset must follow the CC BY-SA-NC 4.0 license as stated on the Tianchi dataset page.</li>
-                            <li>• Non-commercial research and educational use is recommended unless additional permissions are granted.</li>
-                            <li>• Proper attribution to the dataset author and platform is required in any publications or derived works.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Schema Tab -->
-                <div id="schema-tab" class="tab-content hidden">
-                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field Name</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data Type</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">TRIP_ID</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        Unique identifier for each completed taxi trip.
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">1372636858620000589</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">CALL_TYPE</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        Service initiation type: 'A' (central dispatch), 'B' (stand), or 'C' (street hail/other).
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">C</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">ORIGIN_CALL</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">integer / null</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        Anonymized identifier of the caller when the trip was dispatched from the call center
-                                        (CALL_TYPE = 'A'); null otherwise.
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">135492</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">ORIGIN_STAND</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">integer / null</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        Identifier of the taxi stand when the trip started from a stand (CALL_TYPE = 'B'); null otherwise.
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">7</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">TAXI_ID</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">integer</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        Identifier for the taxi that performed the trip.
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">20000589</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">TIMESTAMP</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">integer</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        Unix timestamp (seconds since 1970-01-01) for the trip start time.
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">1372636858</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">DAY_TYPE</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        Day category of the trip start (e.g., normal day, holiday, or day before a holiday),
-                                        encoded as 'A', 'B' or 'C'.
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">A</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">MISSING_DATA</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">boolean</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        Indicates whether the GPS trajectory for this trip has missing segments
-                                        (TRUE if any points are missing, FALSE otherwise).
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">False</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">POLYLINE</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">
-                                        JSON-like list of GPS points representing the trajectory, where each element is
-                                        [LONGITUDE, LATITUDE]. One point is recorded at fixed time intervals along the trip.
-                                    </td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">[[ -8.6186, 41.1414 ], [ -8.6185, 41.1414 ], ...]</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Citation Tab -->
-                <div id="citation-tab" class="tab-content hidden">
-                    <h3 class="text-xl font-semibold text-primary-900 mb-6">How to Cite</h3>
-                    
-                    <div class="space-y-8">
-                        <!-- BibTeX -->
-                        <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">BibTeX</h4>
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">@dataset{porto_taxi_trajectory_2021,
-  title = {Porto Taxi Trajectory},
-  author = {Xing Jiachen},
-  year = {2021},
-  publisher = {Alibaba Cloud Tianchi},
-  url = {https://tianchi.aliyun.com/dataset/94216},
-  note = {Taxi trajectory data from Porto, Portugal (2013-07-01 to 2014-06-30).}
-}</pre>
-                                <button onclick="copyToClipboard('bibtex-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
-                                    Copy
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- APA -->
-                        <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">APA Style</h4>
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <p class="text-sm text-gray-800" id="apa-citation">
-                                    Xing, J. (2021). <em>Porto Taxi Trajectory</em> [Dataset]. Alibaba Cloud Tianchi. 
-                                    https://tianchi.aliyun.com/dataset/94216
-                                </p>
-                                <button onclick="copyToClipboard('apa-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
-                                    Copy
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Chicago -->
-                        <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">Chicago Style</h4>
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <p class="text-sm text-gray-800" id="chicago-citation">
-                                    Xing, Jiachen. "Porto Taxi Trajectory." Dataset. Alibaba Cloud Tianchi, 2021. 
-                                    https://tianchi.aliyun.com/dataset/94216.
-                                </p>
-                                <button onclick="copyToClipboard('chicago-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
-                                    Copy
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- Key Facts Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">1,710,670</div>
+          <div class="text-sm text-gray-600">Trips</div>
         </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">~1.81 GB</div>
+          <div class="text-sm text-gray-600">File Size (CSV)</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">2013–2014</div>
+          <div class="text-sm text-gray-600">Years</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">365</div>
+          <div class="text-sm text-gray-600">Days Covered</div>
+        </div>
+      </div>
     </div>
 
-    <script>
-        // Tab functionality
-        function initTabs() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
+    <!-- Tabbed Content -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <!-- Tab Navigation -->
+      <div class="border-b border-gray-200">
+        <nav class="-mb-px flex space-x-8 px-8">
+          <button class="tab-button py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600" data-tab="overview">
+            Overview
+          </button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="metadata">
+            Metadata
+          </button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="download">
+            Download
+          </button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="schema">
+            Schema
+          </button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="citation">
+            Citation
+          </button>
+        </nav>
+      </div>
 
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetTab = button.getAttribute('data-tab');
+      <!-- Tab Content -->
+      <div class="p-8">
+        <!-- Overview Tab -->
+        <div id="overview-tab" class="tab-content">
+          <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
+          <div class="prose max-w-none text-gray-600 mb-8">
+            <p class="mb-4">
+              This dataset contains taxi trajectories collected in the city of Porto, Portugal. Each row represents one completed taxi trip,
+              including identifiers and temporal metadata as well as the full trajectory encoded as a polyline (a list of GPS points).
+            </p>
+            <p class="mb-4">
+              The timeline spans from <strong>2013-07-01</strong> to <strong>2014-06-30</strong>, totaling <strong>1,710,670</strong> trips.
+              It is commonly used for spatio-temporal modeling tasks such as destination prediction, travel time estimation, and trajectory mining.
+            </p>
+            <p>
+              The official source for downloads and terms is Alibaba Cloud Tianchi (dataset ID 94216).
+            </p>
+          </div>
 
-                    // Remove active classes
-                    tabButtons.forEach(btn => {
-                        btn.classList.remove('border-accent-500', 'text-accent-600');
-                        btn.classList.add('border-transparent', 'text-gray-500');
-                    });
+          <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview</h4>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">TRIP_ID</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">CALL_TYPE</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">ORIGIN_CALL</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">ORIGIN_STAND</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">TAXI_ID</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">TIMESTAMP</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">DAY_TYPE</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">MISSING_DATA</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">POLYLINE (truncated)</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-3 text-sm text-gray-900">1372636858620000589</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">C</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">NULL</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">NULL</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">20000589</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">1372636858</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">A</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">False</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">[[ -8.6186, 41.1414 ], [ -8.6185, 41.1414 ], ...]</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm text-gray-900">1372637303620000596</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">B</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">NULL</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">7</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">20000596</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">1372637303</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">A</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">False</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">[[ -8.6398, 41.1598 ], [ -8.6403, 41.1599 ], ...]</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm text-gray-900">1372637000120000320</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">A</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">135492</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">NULL</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">20000320</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">1372637000</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">B</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">False</td>
+                  <td class="px-4 py-3 text-sm text-gray-900">[[ -8.6129, 41.1404 ], [ -8.6134, 41.1404 ], ...]</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-                    tabContents.forEach(content => {
-                        content.classList.add('hidden');
-                    });
+        <!-- Metadata Tab -->
+        <div id="metadata-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Dataset Metadata</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <table class="w-full">
+                <tbody class="divide-y divide-gray-200">
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Title</td>
+                    <td class="py-3 text-sm text-gray-900">Porto Taxi Trajectory</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
+                    <td class="py-3 text-sm text-gray-900">Transportation / Mobility</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Geographic Coverage</td>
+                    <td class="py-3 text-sm text-gray-900">Porto, Portugal</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
+                    <td class="py-3 text-sm text-gray-900">2013-07-01 – 2014-06-30</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
+                    <td class="py-3 text-sm text-gray-900">Historical dataset (no ongoing updates)</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Data Source</td>
+                    <td class="py-3 text-sm text-gray-900">Alibaba Cloud Tianchi (dataset ID: 94216)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <table class="w-full">
+                <tbody class="divide-y divide-gray-200">
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">License</td>
+                    <td class="py-3 text-sm text-gray-900">CC BY-SA-NC 4.0</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Format</td>
+                    <td class="py-3 text-sm text-gray-900">CSV</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">File Size</td>
+                    <td class="py-3 text-sm text-gray-900">1,897,314 KB (~1.81 GB)</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Trips</td>
+                    <td class="py-3 text-sm text-gray-900">1,710,670 completed taxi trips</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Last Updated</td>
+                    <td class="py-3 text-sm text-gray-900">2021 (see Tianchi dataset page)</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Version</td>
+                    <td class="py-3 text-sm text-gray-900">1.0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-                    // Add active classes
-                    button.classList.remove('border-transparent', 'text-gray-500');
-                    button.classList.add('border-accent-500', 'text-accent-600');
+        <!-- Download Tab -->
+        <div id="download-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Download</h3>
 
-                    document.getElementById(targetTab + '-tab').classList.remove('hidden');
-                });
-            });
-        }
+          <div class="grid md:grid-cols-1 gap-8">
+            <div class="border border-gray-200 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-primary-900 mb-4">Download on Tianchi</h4>
+              <p class="text-gray-600 mb-4">
+                This dataset is hosted on Alibaba Cloud Tianchi. Click the button below to open the dataset page and download
+                the files (login may be required).
+              </p>
 
-        // Copy to clipboard functionality
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const text = element.textContent || element.innerText;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                // Show feedback
-                const button = element.parentElement.querySelector('button');
-                const originalText = button.textContent;
-                button.textContent = 'Copied!';
-                button.classList.add('bg-green-100', 'text-green-700');
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.classList.remove('bg-green-100', 'text-green-700');
-                }, 2000);
-            });
-        }
+              <div class="space-y-3 mb-6">
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">Format:</span>
+                  <span class="text-gray-900">CSV</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">Size:</span>
+                  <span class="text-gray-900">1,897,314 KB (~1.81 GB)</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-gray-500">License:</span>
+                  <span class="text-gray-900">CC BY-SA-NC 4.0</span>
+                </div>
+              </div>
 
-        // Initialize tabs on page load
-        document.addEventListener('DOMContentLoaded', initTabs);
-    </script>
+              <a href="https://tianchi.aliyun.com/dataset/94216"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors block text-center">
+                Download on Tianchi
+              </a>
+
+              <p class="mt-3 text-sm text-gray-500">
+                You will be redirected to Tianchi. Please follow the dataset terms and provide attribution when using the data.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h5 class="font-medium text-blue-900 mb-2">Usage Terms (CC BY-SA-NC 4.0)</h5>
+            <ul class="text-sm text-blue-800 space-y-1">
+              <li>• Attribution required (BY).</li>
+              <li>• Share alike for derivatives (SA).</li>
+              <li>• Non-commercial use only (NC), unless you obtain additional permission.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Schema Tab -->
+        <div id="schema-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field Name</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data Type</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">TRIP_ID</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Unique identifier for each completed taxi trip.</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">1372636858620000589</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">CALL_TYPE</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    Service initiation type (e.g., call center / taxi stand / street hail), encoded as A/B/C.
+                  </td>
+                  <td class="px-4 py-3 text-sm text-gray-500">C</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">ORIGIN_CALL</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">integer / null</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Anonymized caller ID for call-center requests; null otherwise.</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">135492</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">ORIGIN_STAND</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">integer / null</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Taxi stand ID if trip originates from a stand; null otherwise.</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">7</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">TAXI_ID</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">integer</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Identifier for the taxi vehicle.</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">20000589</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">TIMESTAMP</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">integer</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Unix start time of the trip (seconds).</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">1372636858</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">DAY_TYPE</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Day category encoded as A/B/C.</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">A</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">MISSING_DATA</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">boolean</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Whether the trajectory has missing segments.</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">False</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">POLYLINE</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string (JSON-like)</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    List of GPS points as [longitude, latitude], representing the trip trajectory.
+                  </td>
+                  <td class="px-4 py-3 text-sm text-gray-500">[[ -8.6186, 41.1414 ], [ -8.6185, 41.1414 ], ...]</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Citation Tab -->
+        <div id="citation-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">How to Cite</h3>
+
+          <div class="space-y-8">
+            <!-- BibTeX -->
+            <div>
+              <h4 class="text-lg font-semibold text-primary-900 mb-3">BibTeX</h4>
+              <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
+<pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">@dataset{porto_taxi_trajectory_2021,
+  title     = {Porto Taxi Trajectory},
+  author    = {Xing Jiachen},
+  year      = {2021},
+  publisher = {Alibaba Cloud Tianchi},
+  url       = {https://tianchi.aliyun.com/dataset/94216},
+  note      = {Taxi trajectories in Porto, Portugal (2013-07-01 to 2014-06-30).}
+}</pre>
+                <button onclick="copyToClipboard('bibtex-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                  Copy
+                </button>
+              </div>
+            </div>
+
+            <!-- APA -->
+            <div>
+              <h4 class="text-lg font-semibold text-primary-900 mb-3">APA Style</h4>
+              <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
+                <p class="text-sm text-gray-800" id="apa-citation">
+                  Jiachen, X. (2021). <em>Porto Taxi Trajectory</em> [Dataset]. Alibaba Cloud Tianchi.
+                  https://tianchi.aliyun.com/dataset/94216
+                </p>
+                <button onclick="copyToClipboard('apa-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                  Copy
+                </button>
+              </div>
+            </div>
+
+            <!-- Chicago -->
+            <div>
+              <h4 class="text-lg font-semibold text-primary-900 mb-3">Chicago Style</h4>
+              <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
+                <p class="text-sm text-gray-800" id="chicago-citation">
+                  Xing, Jiachen. “Porto Taxi Trajectory.” Dataset. Alibaba Cloud Tianchi, 2021.
+                  https://tianchi.aliyun.com/dataset/94216.
+                </p>
+                <button onclick="copyToClipboard('chicago-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /Tab Content -->
+    </div><!-- /Tabbed Content -->
+  </div><!-- /Container -->
+
+  <script>
+    // Tab functionality
+    function initTabs() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetTab = button.getAttribute('data-tab');
+
+          // Remove active styles
+          tabButtons.forEach(btn => {
+            btn.classList.remove('border-accent-500', 'text-accent-600');
+            btn.classList.add('border-transparent', 'text-gray-500');
+          });
+
+          tabContents.forEach(content => content.classList.add('hidden'));
+
+          // Add active styles
+          button.classList.remove('border-transparent', 'text-gray-500');
+          button.classList.add('border-accent-500', 'text-accent-600');
+
+          document.getElementById(targetTab + '-tab').classList.remove('hidden');
+        });
+      });
+    }
+
+    // Copy to clipboard functionality
+    function copyToClipboard(elementId) {
+      const element = document.getElementById(elementId);
+      const text = element.textContent || element.innerText;
+
+      navigator.clipboard.writeText(text).then(() => {
+        const button = element.parentElement.querySelector('button');
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('bg-green-100', 'text-green-700');
+
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove('bg-green-100', 'text-green-700');
+        }, 2000);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initTabs);
+  </script>
 </body>
 </html>
