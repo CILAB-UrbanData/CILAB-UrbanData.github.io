@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC Taxi - DataHub</title>
+    <meta name="description"
+        content="Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            900: '#0f172a'
+                        },
+                        accent: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-primary-700">DataHub</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="/datasets/"
+                        class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Browse Datasets</a>
+                    <a href="/datasets/overview/"
+                        class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium">Overview</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="/" class="text-gray-700 hover:text-primary-600">Home</a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <span class="mx-2 text-gray-400">/</span>
+                        <a href="/datasets/" class="text-gray-700 hover:text-primary-600">Datasets</a>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="mx-2 text-gray-400">/</span>
+                        <span class="text-gray-500">NYC Taxi</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Dataset Header -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-8">
+            <div class="flex items-start justify-between mb-6">
+                <div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <span
+                            class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
+                        <span
+                            class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
+                    </div>
+                    <h1 class="text-4xl font-bold text-primary-900 mb-4">NYC Taxi</h1>
+                    <p class="text-xl text-gray-600 max-w-4xl">
+                        It contains 67,658,820 taxi trip records of
+                        New York (NYC) between 1 Jan and 30 Jun 2016 capturing pickup and drop-off information. All trips are map-matched
+                        and aggregated into 264 spatial regions at 1-hour intervals.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Key Facts Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="text-2xl font-bold text-accent-500 mb-1">67,658,820</div>
+                    <div class="text-sm text-gray-600">Records</div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="text-2xl font-bold text-accent-500 mb-1">470 MB</div>
+                    <div class="text-sm text-gray-600">File Size(parquet)</div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="text-2xl font-bold text-accent-500 mb-1">2016</div>
+                    <div class="text-sm text-gray-600">Year</div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="text-2xl font-bold text-accent-500 mb-1">182</div>
+                    <div class="text-sm text-gray-600">Days Covered</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabbed Content -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+            <!-- Tab Navigation -->
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8 px-8">
+                    <button
+                        class="tab-button active py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600"
+                        data-tab="overview">
+                        Overview
+                    </button>
+                    <button
+                        class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        data-tab="metadata">
+                        Metadata
+                    </button>
+                    <button
+                        class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        data-tab="download">
+                        Download
+                    </button>
+                    <button
+                        class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        data-tab="schema">
+                        Schema
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-8">
+                <!-- Overview Tab -->
+                <div id="overview-tab" class="tab-content">
+                    <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
+                    <div class="prose max-w-none text-gray-600 mb-8">
+                        <p class="mb-4">
+                            We have provided an accurate dataset describing a half year (from 01/01/2016 to
+                            30/06/2016) of the pickup and drop-off information for the green and yellow taxis running in the city of New York, in
+                            the USA. 
+
+                            All trips are map-matched and aggregated into 264 spatial regions, you can get the spatial document in shapefile format 
+                            from raw webite.
+                        </p>
+                        <p class="mb-4">
+                        </p>
+                        <p>
+                        </p>
+                    </div>
+
+                    <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        VendorID</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        lpep_pickup_datetime	</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        lpep_dropoff_datetime</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        store_and_fwd_flag</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">RatecodeID</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">PULocationID</th>                                    
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">DOLocationID</th>   
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">passenger_count</th>   
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">trip_distance</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">fare_amount</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">extra</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">mta_tax</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">tip_amount</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">tolls_amount</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">improvement_surcharge</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">total_amount</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">payment_type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">trip_type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">congestion_surcharge</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2016-02-01 00:11:39</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2016-02-01 00:22:25</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">N</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">265</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">265</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3.80</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">15.23</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.00</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">None</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.46</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">15.69</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">None</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2016-02-01 00:44:47</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2016-02-01 00:51:57</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">N</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">265</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">265</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1.50</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">8.79</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.00</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">None</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.26</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">9.05</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">None</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2016-02-01 00:10:55</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2016-02-01 00:35:08</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">N</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">225</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">77</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3.84</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">15.50</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.5</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.5</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3.36</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">None</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">0.30</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">20.16</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1.0</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">None</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Metadata Tab -->
+                <div id="metadata-tab" class="tab-content hidden">
+                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Dataset Metadata</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <table class="w-full">
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Title</td>
+                                        <td class="py-3 text-sm text-gray-900">NYC taxi</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
+                                        <td class="py-3 text-sm text-gray-900">Mobility</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Geographic Coverage</td>
+                                        <td class="py-3 text-sm text-gray-900">New York City, USA</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
+                                        <td class="py-3 text-sm text-gray-900">January 1, 2016 - June 30, 2016</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
+                                        <td class="py-3 text-sm text-gray-900">---</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Data Source</td>
+                                        <td class="py-3 text-sm text-gray-900">NYC Taxi & Limousine Commission</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <table class="w-full">
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">License</td>
+                                        <td class="py-3 text-sm text-gray-900">---</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Format</td>
+                                        <td class="py-3 text-sm text-gray-900">parquet, shapefile</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">File Size</td>
+                                        <td class="py-3 text-sm text-gray-900">470 MB (compressed)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Records</td>
+                                        <td class="py-3 text-sm text-gray-900">67,658,820</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Last Updated</td>
+                                        <td class="py-3 text-sm text-gray-900">December 4, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 text-sm font-medium text-gray-500">Version</td>
+                                        <td class="py-3 text-sm text-gray-900">1.0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download Tab -->
+                <div id="download-tab" class="tab-content hidden">
+                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Download Options</h3>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Original Dataset -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Original Dataset</h4>
+                            <p class="text-gray-600 mb-4">Raw data with region shapefile as collected from NYC Taxi & Limousine Commission.</p>
+
+                            <div class="space-y-3 mb-6">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Format:</span>
+                                    <span class="text-gray-900">Parquet, Shapefile</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Size:</span>
+                                    <span class="text-gray-900">470 MB</span>
+                                </div>
+                            </div>
+
+                            <a href=https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page download="taxi data" class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors text-center block">
+        Download Original (parquet)
+    </a>
+                        </div>
+
+                        <!-- Processed Dataset -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Processed Dataset</h4>
+                            <p class="text-gray-600 mb-4">Cleaned and normalized data with concerned features.
+                            </p>
+
+                            <div class="space-y-3 mb-6">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Format:</span>
+                                    <span class="text-gray-900">Parquet</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Size:</span>
+                                    <span class="text-gray-900">380 MB</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Checksum (SHA256):</span>
+                                    <span class="text-gray-900 font-mono text-xs">f6e5d4c3b2a1...</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <button
+                                    class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    TO BE DONE (Parquet)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Terms -->
+                    <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <h5 class="font-medium text-blue-900 mb-2">Download Terms</h5>
+                        <ul class="text-sm text-blue-800 space-y-1">
+                            <li>• Attribution required when using this dataset</li>
+                            <li>• Please cite this dataset in any publications</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Schema Tab -->
+                <div id="schema-tab" class="tab-content hidden">
+                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field
+                                        Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data
+                                        Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Description</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">VendorID</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">int</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">A code indicating the LPEP provider that provided the record.   
+                                                                                1 = Creative Mobile Technologies, LLC 
+                                                                                2 = Curb Mobility, LLC 
+                                                                                6 = Myle Technologies Inc </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">lpep_pickup_datetime </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">datetime</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">The date and time when the meter was engaged. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">2016-02-01 00:10:55</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">lpep_dropoff_datetime </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">datetime</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">The date and time when the meter was disengaged. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">2016-02-01 00:35:08</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">store_and_fwd_flag </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">This flag indicates whether the trip record was held in vehicle memory before 
+                                                                                sending to the vendor, aka “store and forward,” because the vehicle did not 
+                                                                                have a connection to the server. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">N</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">weather_condition</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Weather condition during measurement
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">Clear, Rain, Snow, Fog</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">RatecodeID </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">int</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">The final rate code in effect at the end of the trip. 
+                                                                                1 = Standard rate 
+                                                                                2 = JFK 
+                                                                                3 = Newark 
+                                                                                4 = Nassau or Westchester 
+                                                                                5 = Negotiated fare 
+                                                                                6 = Group ride 
+                                                                                99 = Null/unknown </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">PULocationID  </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">int</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">TLC Taxi Zone in which the taximeter was engaged. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">265</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">DOLocationID  </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">int</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">TLC Taxi Zone in which the taximeter was dsengaged. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">265</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">passenger_count  </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">int</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">The number of passengers in the vehicle.  </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">trip_distance   </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">The elapsed trip distance in miles reported by the taximeter. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">15.46</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">fare_amount    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">The time-and-distance fare calculated by the meter. For additional 
+                                                                                information on the following columns, see 
+                                                                                https://www.nyc.gov/site/tlc/passengers/taxi-fare.page </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">8.79</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">extra    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Miscellaneous extras and surcharges. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">0.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">mta_tax    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Tax that is automatically triggered based on the metered rate in use. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">0.5</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">tip_amount     </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Tip amount – This field is automatically populated for credit card tips. Cash 
+                                                                                tips are not included. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">3.36</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">tolls_amount </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Total amount of all tolls paid in trip. </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">0.0</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">improvement_surcharge</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Improvement surcharge assessed trips at the flag drop. The improvement 
+                                                                                surcharge began being levied in 2015.  </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">0.46</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">total_amount </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">The total amount charged to passengers. Does not include cash tips.  </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">15.46</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">payment_type </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">int</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">A numeric code signifying how the passenger paid for the trip. 
+                                                                                0 = Flex Fare trip 
+                                                                                1 = Credit card 
+                                                                                2 = Cash 
+                                                                                3 = No charge 
+                                                                                4 = Dispute 
+                                                                                5 = Unknown 
+                                                                                6 = Voided trip </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">2</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">trip_type </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">A code indicating whether the trip was a street-hail or a dispatch that is 
+                                                                                automatically assigned based on the metered rate in use but can be altered 
+                                                                                by the driver.  
+                                                                                1 = Street-hail 
+                                                                                2 = Dispatch </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">1.0</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">congestion_surcharge </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Total amount collected in trip for NYS congestion surcharge.</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">None</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function initTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.getAttribute('data-tab');
+
+                    // Remove active classes
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('border-accent-500', 'text-accent-600');
+                        btn.classList.add('border-transparent', 'text-gray-500');
+                    });
+
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    // Add active classes
+                    button.classList.remove('border-transparent', 'text-gray-500');
+                    button.classList.add('border-accent-500', 'text-accent-600');
+
+                    document.getElementById(targetTab + '-tab').classList.remove('hidden');
+                });
+            });
+        }
+
+        // Copy to clipboard functionality
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent || element.innerText;
+
+            navigator.clipboard.writeText(text).then(() => {
+                // Show feedback
+                const button = element.parentElement.querySelector('button');
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('bg-green-100', 'text-green-700');
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('bg-green-100', 'text-green-700');
+                }, 2000);
+            });
+        }
+
+        // Initialize tabs on page load
+        document.addEventListener('DOMContentLoaded', initTabs);
+    </script>
+</body>
+
+</html>
