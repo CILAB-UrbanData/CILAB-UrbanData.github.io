@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYC Traffic Flow 2023 - DataHub</title>
-    <meta name="description" content="Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations">
+    <title>LargeCommutingOD - DataHub</title>
+    <meta name="description" content="Large-scale U.S. commuting OD data with rich sociodemographic attributes, POI distributions, and standardized region-level mobility flows">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -62,7 +62,7 @@
                 <li aria-current="page">
                     <div class="flex items-center">
                         <span class="mx-2 text-gray-400">/</span>
-                        <span class="text-gray-500">NYC Traffic Flow 2023</span>
+                        <span class="text-gray-500">LargeCommutingOD</span>
                     </div>
                 </li>
             </ol>
@@ -76,10 +76,13 @@
                         <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
                         <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
                     </div>
-                    <h1 class="text-4xl font-bold text-primary-900 mb-4">NYC Traffic Flow 2023</h1>
+                    <h1 class="text-4xl font-bold text-primary-900 mb-4">LargeCommutingOD</h1>
                     <p class="text-xl text-gray-600 max-w-4xl">
-                        LargeCommutingOD integrates data from the U.S. Census Bureau (commuting OD, sociodemographics, boundaries) and OpenStreetMap (POIs) with spatial feature correlations.
-                        This dataset delivers detailed insights into urban commuting patterns across 3,333 diverse U.S. areas (metropolitans, towns, rural regions).
+                        LargeCommutingOD is a large-scale commuting origin–destination (OD) dataset that integrates data
+                        from the U.S. Census Bureau (commuting flows, sociodemographics, administrative boundaries)
+                        and OpenStreetMap (points of interest). It provides standardized region-level attributes and OD
+                        matrices for <span class="font-semibold">3,233 areas across the United States</span>, covering diverse
+                        metropolitan, town, and rural environments.
                     </p>
                 </div>
             </div>
@@ -87,23 +90,24 @@
             <!-- Key Facts Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">2.1M</div>
-                    <div class="text-sm text-gray-600">Records</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">3,233</div>
+                    <div class="text-sm text-gray-600">Areas Covered</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">450 MB</div>
-                    <div class="text-sm text-gray-600">File Size</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">131</div>
+                    <div class="text-sm text-gray-600">Region Attributes</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">2023</div>
-                    <div class="text-sm text-gray-600">Year</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">30+</div>
+                    <div class="text-sm text-gray-600">POI Categories</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">365</div>
-                    <div class="text-sm text-gray-600">Days Covered</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">2018</div>
+                    <div class="text-sm text-gray-600">LODES Reference Year</div>
                 </div>
             </div>
         </div>
+
 
         <!-- Tabbed Content -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -135,63 +139,76 @@
                     <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
                     <div class="prose max-w-none text-gray-600 mb-8">
                         <p class="mb-4">
-                            This comprehensive dataset captures traffic flow patterns across New York City's major intersections throughout 2023. 
-                            The data includes real-time sensor readings from over 1,200 intersection points across all five boroughs, 
-                            providing unprecedented insight into urban mobility patterns.
+                            This extensive dataset captures commuting origin–destination (OD) flow patterns across the entire
+                            United States, spanning <span class="font-semibold">3,233 areas</span> that use counties and
+                            metropolitan regions as administrative boundaries. It offers a unified, nationwide view of how
+                            residents commute between where they live and where they work.
                         </p>
+
                         <p class="mb-4">
-                            Each record contains detailed information about vehicle counts, traffic speeds, intersection coordinates, 
-                            weather conditions, and temporal metadata. The dataset has been processed to remove personally identifiable 
-                            information while maintaining statistical accuracy for research purposes.
+                            Each region is characterized by a rich set of <span class="font-semibold">131 urban attributes</span>,
+                            including sociodemographic indicators (population structure, income, education, household and vehicle
+                            ownership, commuting time, etc.) derived from the American Community Survey (ACS), as well as
+                            <span class="font-semibold">30+ categories of points of interest (POIs)</span> from OpenStreetMap.
+                            The dataset also provides pairwise centroid distances between regions and commuting OD matrices
+                            aggregated from the <span class="font-semibold">2018 LODES</span> dataset. All records are structurally
+                            standardized for research while preserving statistical integrity.
                         </p>
+
                         <p>
-                            This dataset is particularly valuable for urban planning research, traffic optimization studies, 
-                            and machine learning applications focused on transportation systems.
+                            This dataset is particularly valuable for studies in urban mobility modeling, commuting behavior
+                            analysis, transportation planning, and machine learning applications focused on OD flow prediction
+                            and generation, as well as benchmarking new generative and graph-based models.
                         </p>
                     </div>
 
-                    <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview</h4>
+                    <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview (Illustrative)</h4>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Intersection ID</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vehicle Count</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Avg Speed (mph)</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weather</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Borough</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">area_id</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">region_o</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">region_d</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">od_flow</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">dist_km</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">pop_o</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">pop_d</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:00:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_001_42ST_BROADWAY</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">247</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">12.3</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Manhattan</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">US_001</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">TRACT_36061000100</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">TRACT_36061000500</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">185</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">4.2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3,215</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">5,482</td>
                                 </tr>
                                 <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:15:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_002_34ST_7AVE</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">189</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">15.7</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Manhattan</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">US_001</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">TRACT_36061000100</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">TRACT_36061001000</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">92</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">7.8</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3,215</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">4,037</td>
                                 </tr>
                                 <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:30:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_003_ATLANTIC_FLATBUSH</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">156</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">18.2</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Brooklyn</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">US_145</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">CBG_060014001001</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">CBG_060014005003</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">236</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">12.5</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">4,802</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">6,129</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
 
                 <!-- Metadata Tab -->
                 <div id="metadata-tab" class="tab-content hidden">
@@ -202,27 +219,35 @@
                                 <tbody class="divide-y divide-gray-200">
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Title</td>
-                                        <td class="py-3 text-sm text-gray-900">NYC Traffic Flow 2023</td>
+                                        <td class="py-3 text-sm text-gray-900">LargeCommutingOD</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
-                                        <td class="py-3 text-sm text-gray-900">Transportation</td>
+                                        <td class="py-3 text-sm text-gray-900">Transportation / Urban Mobility</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Geographic Coverage</td>
-                                        <td class="py-3 text-sm text-gray-900">New York City, USA</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            United States (3,233 areas using counties and metropolitans as boundaries)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
-                                        <td class="py-3 text-sm text-gray-900">January 1, 2023 - December 31, 2023</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            2018 (commuting flows from 2018 LODES)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
-                                        <td class="py-3 text-sm text-gray-900">Real-time (15-minute intervals)</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            Static (one-time curated release)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Data Source</td>
-                                        <td class="py-3 text-sm text-gray-900">NYC Department of Transportation</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            U.S. Census Bureau (ACS &amp; LODES); OpenStreetMap Contributors
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -232,27 +257,39 @@
                                 <tbody class="divide-y divide-gray-200">
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">License</td>
-                                        <td class="py-3 text-sm text-gray-900">Creative Commons Attribution 4.0</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            Not explicitly specified(see original repository)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Format</td>
-                                        <td class="py-3 text-sm text-gray-900">CSV, JSON</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            npy
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">File Size</td>
-                                        <td class="py-3 text-sm text-gray-900">450 MB (compressed)</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            271 MB
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Records</td>
-                                        <td class="py-3 text-sm text-gray-900">2,100,000</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            3,233 areas with region-level attributes and commuting OD matrices
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Last Updated</td>
-                                        <td class="py-3 text-sm text-gray-900">January 15, 2024</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            2025 (ICLR 2025 dataset &amp; benchmark release)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Version</td>
-                                        <td class="py-3 text-sm text-gray-900">1.2</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            Not specified (use latest commit in official repo)
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -260,82 +297,132 @@
                     </div>
                 </div>
 
+
                 <!-- Download Tab -->
                 <div id="download-tab" class="tab-content hidden">
-                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Download Options</h3>
-                    
+                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Download & Access</h3>
+
+                    <p class="text-gray-600 mb-6">
+                        The LargeCommutingOD dataset and benchmark code are maintained by the original authors and
+                        are publicly available via the official GitHub repository. Please follow the instructions in
+                        the repository README for downloading specific subsets (e.g., full areas, metropolitan
+                        regions) and for reproducing the benchmark experiments.
+                    </p>
+
                     <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Original Dataset -->
+                        <!-- Official Repository -->
                         <div class="border border-gray-200 rounded-lg p-6">
-                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Original Dataset</h4>
-                            <p class="text-gray-600 mb-4">Raw data as collected from NYC DOT sensors with minimal processing.</p>
-                            
-                            <div class="space-y-3 mb-6">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Format:</span>
-                                    <span class="text-gray-900">CSV</span>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Official GitHub Repository</h4>
+                            <p class="text-gray-600 mb-4">
+                                Access the dataset, preprocessing scripts, and baseline models from the official
+                                LargeCommutingOD repository.
+                            </p>
+
+                            <div class="space-y-3 mb-6 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Repository:</span>
+                                    <a href="https://github.com/tsinghua-fib-lab/CommutingODGen-Dataset"
+                                    class="text-accent-600 hover:text-accent-500"
+                                    target="_blank" rel="noopener noreferrer">
+                                        CommutingODGen-Dataset
+                                    </a>
                                 </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Size:</span>
-                                    <span class="text-gray-900">450 MB</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Checksum (SHA256):</span>
-                                    <span class="text-gray-900 font-mono text-xs">a1b2c3d4e5f6...</span>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Maintainers:</span>
+                                    <span class="text-gray-900">Tsinghua FIB Lab and collaborators</span>
                                 </div>
                             </div>
-                            
-                            <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                Download Original (CSV)
-                            </button>
+
+                            <a href="https://github.com/tsinghua-fib-lab/CommutingODGen-Dataset"
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full inline-flex justify-center bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                Open Repository
+                            </a>
                         </div>
 
-                        <!-- Processed Dataset -->
+                        <!-- Usage Notes -->
                         <div class="border border-gray-200 rounded-lg p-6">
-                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Processed Dataset</h4>
-                            <p class="text-gray-600 mb-4">Cleaned and normalized data with additional derived features.</p>
-                            
-                            <div class="space-y-3 mb-6">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Format:</span>
-                                    <span class="text-gray-900">JSON, Parquet</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Size:</span>
-                                    <span class="text-gray-900">380 MB</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Checksum (SHA256):</span>
-                                    <span class="text-gray-900 font-mono text-xs">f6e5d4c3b2a1...</span>
-                                </div>
-                            </div>
-                            
-                            <div class="space-y-2">
-                                <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                    Download Processed (JSON)
-                                </button>
-                                <button class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                    Download Processed (Parquet)
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Usage Notes</h4>
+                            <p class="text-gray-600 mb-4">
+                                This portal does <span class="font-semibold">not</span> mirror or redistribute the raw dataset.
+                                All downloads should be performed via the official repository to ensure you obtain the
+                                latest version and follow the original usage terms.
+                            </p>
 
-                    <!-- Download Terms -->
-                    <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                        <h5 class="font-medium text-blue-900 mb-2">Download Terms</h5>
-                        <ul class="text-sm text-blue-800 space-y-1">
-                            <li>• Attribution required when using this dataset</li>
-                            <li>• Commercial use permitted under CC BY 4.0 license</li>
-                            <li>• Please cite this dataset in any publications</li>
-                        </ul>
+                            <ul class="text-sm text-gray-700 space-y-2">
+                                <li>• Refer to the GitHub README for detailed download commands and file organization.</li>
+                                <li>• Check the repository issues/releases for updates or known limitations.</li>
+                                <li>• When publishing work based on this dataset, please cite the ICLR 2025 paper listed in the Citation tab.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
+
                 <!-- Schema Tab -->
                 <div id="schema-tab" class="tab-content hidden">
-                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
-                    
+                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema (Representative)</h3>
+
+                    <p class="text-gray-600 mb-4">
+                        LargeCommutingOD is organized into multiple files describing region-level attributes and
+                        commuting OD matrices. The exact file structure may vary slightly by subset; please refer to
+                        the official repository for complete details. Below is a representative schema for the main
+                        components.
+                    </p>
+
+                    <h4 class="text-lg font-semibold text-primary-900 mb-3 mt-4">Region Attribute Table</h4>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">area_id</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Identifier of the commuting area (county or metro)</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">US_001</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">region_id</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Region identifier (census tract or CBG)</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">TRACT_36061000100</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">region_type</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Type of region unit</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">tract / cbg</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">pop_total</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">integer</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Total residential population</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">3,215</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">income_median</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Median household income (USD)</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">68500.0</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">poi_workplace</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">integer</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Count or density of workplace-related POIs</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">42</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="text-lg font-semibold text-primary-900 mb-3">Commuting OD Matrix Entries</h4>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
@@ -348,52 +435,34 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">timestamp</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">datetime</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Measurement timestamp (UTC)</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">2023-01-01 08:00:00</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">intersection_id</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">area_id</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Unique intersection identifier</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">INT_001_42ST_BROADWAY</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Commuting area identifier</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">US_001</td>
                                 </tr>
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">vehicle_count</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">origin_region</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Origin region identifier</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">TRACT_36061000100</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">dest_region</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Destination region identifier</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">TRACT_36061000500</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">od_flow</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">integer</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Number of vehicles in 15-minute window</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">247</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Number of commuters from origin to destination</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">185</td>
                                 </tr>
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">avg_speed_mph</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">dist_km</td>
                                     <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Average vehicle speed in miles per hour</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">12.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">weather_condition</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Weather condition during measurement</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">Clear, Rain, Snow, Fog</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">borough</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">NYC borough location</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">Manhattan, Brooklyn, Queens, Bronx, Staten Island</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">latitude</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Intersection latitude coordinate</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">40.7589</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">longitude</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Intersection longitude coordinate</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">-73.9851</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Euclidean distance between region centroids (km)</td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">4.2</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -403,20 +472,24 @@
                 <!-- Citation Tab -->
                 <div id="citation-tab" class="tab-content hidden">
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">How to Cite</h3>
-                    
+
+                    <p class="text-gray-600 mb-6">
+                        If you use the LargeCommutingOD dataset or its benchmark in your research, please cite the
+                        following ICLR 2025 paper:
+                    </p>
+
                     <div class="space-y-8">
                         <!-- BibTeX -->
                         <div>
                             <h4 class="text-lg font-semibold text-primary-900 mb-3">BibTeX</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">@dataset{nyc_traffic_2023,
-  title = {NYC Traffic Flow 2023},
-  author = {NYC Department of Transportation},
-  year = {2023},
-  publisher = {DataHub},
-  url = {https://datahub.example.com/datasets/nyc-traffic-flow-2023},
-  note = {Accessed: 2024-01-15}
-}</pre>
+                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">@inproceedings{rong2025large,
+                title     = {A Large-scale Dataset and Benchmark for Commuting Origin-Destination Flow Generation},
+                author    = {Rong, Can and Ding, Jingtao and Liu, Yan and Li, Yong},
+                booktitle = {Proceedings of the 13th International Conference on Learning Representations (ICLR)},
+                year      = {2025},
+                url       = {https://openreview.net/forum?id=WeJEidTzff}
+                }</pre>
                                 <button onclick="copyToClipboard('bibtex-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
                                 </button>
@@ -428,8 +501,10 @@
                             <h4 class="text-lg font-semibold text-primary-900 mb-3">APA Style</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
                                 <p class="text-sm text-gray-800" id="apa-citation">
-                                    NYC Department of Transportation. (2023). <em>NYC Traffic Flow 2023</em> [Dataset]. DataHub. 
-                                    https://datahub.example.com/datasets/nyc-traffic-flow-2023
+                                    Rong, C., Ding, J., Liu, Y., &amp; Li, Y. (2025). <em>A Large-scale Dataset and Benchmark for
+                                    Commuting Origin-Destination Flow Generation</em>. In <em>Proceedings of the 13th
+                                    International Conference on Learning Representations (ICLR)</em>. Retrieved from
+                                    https://openreview.net/forum?id=WeJEidTzff
                                 </p>
                                 <button onclick="copyToClipboard('apa-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
@@ -442,8 +517,9 @@
                             <h4 class="text-lg font-semibold text-primary-900 mb-3">Chicago Style</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
                                 <p class="text-sm text-gray-800" id="chicago-citation">
-                                    NYC Department of Transportation. "NYC Traffic Flow 2023." Dataset. DataHub, 2023. 
-                                    https://datahub.example.com/datasets/nyc-traffic-flow-2023.
+                                    Rong, Can, Jingtao Ding, Yan Liu, and Yong Li. 2025. “A Large-scale Dataset and Benchmark for
+                                    Commuting Origin-Destination Flow Generation.” In <em>Proceedings of the 13th International
+                                    Conference on Learning Representations (ICLR)</em>. https://openreview.net/forum?id=WeJEidTzff.
                                 </p>
                                 <button onclick="copyToClipboard('chicago-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
@@ -452,6 +528,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
