@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYC Traffic Flow 2023 - DataHub</title>
-    <meta name="description" content="Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations">
+    <title>NYC Commuting - DataHub</title>
+    <meta name="description" content="Commuting origin–destination flows between 2,152 New York City census tracts with land-use and infrastructure indicators for flow prediction research.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -62,7 +62,7 @@
                 <li aria-current="page">
                     <div class="flex items-center">
                         <span class="mx-2 text-gray-400">/</span>
-                        <span class="text-gray-500">NYC Traffic Flow 2023</span>
+                        <span class="text-gray-500">NYC Commuting</span>
                     </div>
                 </li>
             </ol>
@@ -74,12 +74,15 @@
                 <div>
                     <div class="flex items-center gap-4 mb-4">
                         <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
-                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation / Mobility</span>
                     </div>
-                    <h1 class="text-4xl font-bold text-primary-900 mb-4">NYC Traffic Flow 2023</h1>
+                    <h1 class="text-4xl font-bold text-primary-900 mb-4">NYC Commuting</h1>
                     <p class="text-xl text-gray-600 max-w-4xl">
-                        Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations. 
-                        This dataset provides detailed insights into urban traffic patterns across all five boroughs.
+                        Commuting origin–destination (OD) flows between 
+                        <span class="font-semibold">2,152 New York City census tracts</span>, enriched with land-use and 
+                        infrastructure indicators. This dataset follows the Geo-Contextual Multitask Embedding Learner 
+                        (GMEL) setting for commuting flow prediction and is suitable for graph-based and traditional 
+                        flow models.:contentReference[oaicite:1]{index=1}
                     </p>
                 </div>
             </div>
@@ -87,20 +90,20 @@
             <!-- Key Facts Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">2.1M</div>
-                    <div class="text-sm text-gray-600">Records</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">2,152</div>
+                    <div class="text-sm text-gray-600">Census Tracts (nodes)</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">450 MB</div>
-                    <div class="text-sm text-gray-600">File Size</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">5</div>
+                    <div class="text-sm text-gray-600">Boroughs of NYC</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">2023</div>
-                    <div class="text-sm text-gray-600">Year</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">2015</div>
+                    <div class="text-sm text-gray-600">Reference Year (LODES, PLUTO)</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">365</div>
-                    <div class="text-sm text-gray-600">Days Covered</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">1.02 MB</div>
+                    <div class="text-sm text-gray-600">Compressed Dataset Size</div>
                 </div>
             </div>
         </div>
@@ -135,58 +138,60 @@
                     <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
                     <div class="prose max-w-none text-gray-600 mb-8">
                         <p class="mb-4">
-                            This comprehensive dataset captures traffic flow patterns across New York City's major intersections throughout 2023. 
-                            The data includes real-time sensor readings from over 1,200 intersection points across all five boroughs, 
-                            providing unprecedented insight into urban mobility patterns.
+                            NYC Commuting provides a tract-level view of commuting flows across New York City. 
+                            Each geographic unit is a census tract, and flows represent the number of workers 
+                            commuting from a home tract to a work tract. The dataset is derived from the 
+                            2015 Longitudinal Employer–Household Dynamics Origin–Destination Employment Statistics 
+                            (LODES) and NYC PLUTO land-use data, following the setup used in the GMEL model 
+                            for commuting flow prediction.:contentReference[oaicite:2]{index=2}
                         </p>
                         <p class="mb-4">
-                            Each record contains detailed information about vehicle counts, traffic speeds, intersection coordinates, 
-                            weather conditions, and temporal metadata. The dataset has been processed to remove personally identifiable 
-                            information while maintaining statistical accuracy for research purposes.
+                            For each tract, the dataset aggregates key urban indicators (e.g., building counts, land-use 
+                            composition, floor area ratios) from PLUTO into tract-level feature vectors, and constructs a 
+                            geo-adjacency network and distance matrix between tract centroids. These components 
+                            together support learning geo-contextual embeddings and modeling the spatial interaction 
+                            between supply (origin) and demand (destination) regions.
                         </p>
                         <p>
-                            This dataset is particularly valuable for urban planning research, traffic optimization studies, 
-                            and machine learning applications focused on transportation systems.
+                            This dataset is particularly useful for commuting flow prediction, gravity/deep gravity 
+                            benchmarking, graph representation learning, and broader urban analytics that require a 
+                            compact, tract-level OD network of New York City.
                         </p>
                     </div>
 
-                    <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview</h4>
+                    <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview (Illustrative)</h4>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Intersection ID</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vehicle Count</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Avg Speed (mph)</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weather</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Borough</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">origin_tract</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">dest_tract</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">flow</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">distance_km</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">origin_feature_example</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:00:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_001_42ST_BROADWAY</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">247</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">12.3</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Manhattan</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">36061000100</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">36061000500</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">128</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">4.2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">res_building_density = 0.35</td>
                                 </tr>
                                 <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:15:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_002_34ST_7AVE</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">189</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">15.7</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Manhattan</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">36061000100</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">36061001000</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">64</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">7.8</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">office_landuse_ratio = 0.12</td>
                                 </tr>
                                 <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:30:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_003_ATLANTIC_FLATBUSH</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">156</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">18.2</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Brooklyn</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">36047010100</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">36047010500</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">203</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3.6</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">avg_floor_area_ratio = 2.1</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -202,27 +207,35 @@
                                 <tbody class="divide-y divide-gray-200">
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Title</td>
-                                        <td class="py-3 text-sm text-gray-900">NYC Traffic Flow 2023</td>
+                                        <td class="py-3 text-sm text-gray-900">NYC Commuting</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
-                                        <td class="py-3 text-sm text-gray-900">Transportation</td>
+                                        <td class="py-3 text-sm text-gray-900">Transportation / Human Mobility</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Geographic Coverage</td>
-                                        <td class="py-3 text-sm text-gray-900">New York City, USA</td>
+                                        <td class="py-3 text-sm text-gray-900">New York City, USA (five boroughs, census tracts)</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
-                                        <td class="py-3 text-sm text-gray-900">January 1, 2023 - December 31, 2023</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            2015 commuting flows (LODES) and 2015 land-use indicators (PLUTO).:contentReference[oaicite:3]{index=3}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
-                                        <td class="py-3 text-sm text-gray-900">Real-time (15-minute intervals)</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            Static (one-time processed release; no real-time updates)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Data Source</td>
-                                        <td class="py-3 text-sm text-gray-900">NYC Department of Transportation</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            LODES 2015 OD Employment Statistics (US Census Bureau), 
+                                            NYC PLUTO 2015 (NYC Department of City Planning), 
+                                            OSRM/OSM distances between tract centroids.:contentReference[oaicite:4]{index=4}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -232,27 +245,44 @@
                                 <tbody class="divide-y divide-gray-200">
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">License</td>
-                                        <td class="py-3 text-sm text-gray-900">Creative Commons Attribution 4.0</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            Derived from multiple public data sources (LODES, NYC PLUTO, OSM/OSRM). 
+                                            Users should review and comply with the original data providers’ terms of use; 
+                                            this processed dataset is intended for research purposes.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Format</td>
-                                        <td class="py-3 text-sm text-gray-900">CSV, JSON</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            One folder per tract cluster (obtained via k-means), each containing four NumPy <code>.npy</code> arrays:
+                                            an OD flow matrix, a tract feature matrix, a distance matrix, and an adjacency matrix for tracts 
+                                            within that cluster (on average ~15 tracts per cluster).
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">File Size</td>
-                                        <td class="py-3 text-sm text-gray-900">450 MB (compressed)</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            1.02 MB (compressed archive)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Records</td>
-                                        <td class="py-3 text-sm text-gray-900">2,100,000</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            2,152 census tracts grouped into k-means clusters, with a total of 13,069 commuting OD flow entries
+                                            across all clusters.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Last Updated</td>
-                                        <td class="py-3 text-sm text-gray-900">January 15, 2024</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            2025 (this processed version)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Version</td>
-                                        <td class="py-3 text-sm text-gray-900">1.2</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            v1.0 (NYC Commuting processed dataset)
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -265,59 +295,81 @@
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">Download Options</h3>
                     
                     <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Original Dataset -->
+                        
+                        <!-- Original Data Sources -->
                         <div class="border border-gray-200 rounded-lg p-6">
-                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Original Dataset</h4>
-                            <p class="text-gray-600 mb-4">Raw data as collected from NYC DOT sensors with minimal processing.</p>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Original Data Sources</h4>
+                            <p class="text-gray-600 mb-4">
+                                NYC Commuting is constructed from publicly available commuting and land-use datasets. 
+                                Users who require raw data or wish to recreate the processing pipeline should refer to 
+                                the original sources below.
+                            </p>
                             
-                            <div class="space-y-3 mb-6">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Format:</span>
-                                    <span class="text-gray-900">CSV</span>
+                            <div class="space-y-3 mb-6 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Commuting Flows (LODES):</span>
+                                    <a href="https://lehd.ces.census.gov/data/lodes/LODES7/"
+                                    class="text-accent-600 hover:text-accent-500"
+                                    target="_blank" rel="noopener noreferrer">
+                                        LEHD Origin–Destination Employment Statistics 2015 (US Census Bureau)
+                                    </a>
                                 </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Size:</span>
-                                    <span class="text-gray-900">450 MB</span>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Land Use (PLUTO):</span>
+                                    <a href="https://www.nyc.gov/content/planning/en/data-maps/open-data/dwn-pluto-mappluto"
+                                    class="text-accent-600 hover:text-accent-500"
+                                    target="_blank" rel="noopener noreferrer">
+                                        NYC Primary Land Use Tax Lot Output (PLUTO) 2015
+                                    </a>
                                 </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Checksum (SHA256):</span>
-                                    <span class="text-gray-900 font-mono text-xs">a1b2c3d4e5f6...</span>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Distances (OSRM/OSM):</span>
+                                    <span class="text-gray-900">
+                                        <a href="https://project-osrm.org/"
+                                        class="text-accent-600 hover:text-accent-500"
+                                        target="_blank" rel="noopener noreferrer">
+                                            OSRM routing engine
+                                        </a>
+                                        based on 
+                                        <a href="https://www.openstreetmap.org"
+                                        class="text-accent-600 hover:text-accent-500"
+                                        target="_blank" rel="noopener noreferrer">
+                                            OpenStreetMap data
+                                        </a>.
+                                    </span>
                                 </div>
                             </div>
-                            
-                            <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                Download Original (CSV)
-                            </button>
                         </div>
+                                                
 
                         <!-- Processed Dataset -->
                         <div class="border border-gray-200 rounded-lg p-6">
-                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Processed Dataset</h4>
-                            <p class="text-gray-600 mb-4">Cleaned and normalized data with additional derived features.</p>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Processed NYC Commuting Dataset</h4>
+                            <p class="text-gray-600 mb-4">
+                                The processed NYC Commuting dataset packages tract-level OD flows into k-means-based tract clusters. 
+                                For each cluster (on average around 15 tracts), a folder contains four NumPy <code>.npy</code> arrays 
+                                encoding the OD flow matrix, tract feature matrix, distance matrix, and adjacency matrix. 
+                                All cluster folders are distributed together as a single compressed archive (~1.02 MB) for direct use in modeling.
+                            </p>
                             
                             <div class="space-y-3 mb-6">
                                 <div class="flex justify-between text-sm">
                                     <span class="text-gray-500">Format:</span>
-                                    <span class="text-gray-900">JSON, Parquet</span>
+                                    <span class="text-gray-900">
+                                        Compressed archive with OD, feature, distance, and adjacency arrays
+                                    </span>
                                 </div>
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Size:</span>
-                                    <span class="text-gray-900">380 MB</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Checksum (SHA256):</span>
-                                    <span class="text-gray-900 font-mono text-xs">f6e5d4c3b2a1...</span>
+                                    <span class="text-gray-500">Access:</span>
+                                    <span class="text-gray-900">
+                                        Provided via this DataHub entry or associated repository; see project documentation
+                                    </span>
                                 </div>
                             </div>
-                            
-                            <div class="space-y-2">
-                                <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                    Download Processed (JSON)
-                                </button>
-                                <button class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                    Download Processed (Parquet)
-                                </button>
-                            </div>
+
+                            <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                Download Processed Dataset
+                            </button>
                         </div>
                     </div>
 
@@ -325,9 +377,9 @@
                     <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                         <h5 class="font-medium text-blue-900 mb-2">Download Terms</h5>
                         <ul class="text-sm text-blue-800 space-y-1">
-                            <li>• Attribution required when using this dataset</li>
-                            <li>• Commercial use permitted under CC BY 4.0 license</li>
-                            <li>• Please cite this dataset in any publications</li>
+                            <li>• Use of this processed dataset requires compliance with the terms of LODES, NYC PLUTO, and OSM/OSRM data providers.</li>
+                            <li>• Please cite both the original data sources and the NYC Commuting processed dataset in any publications.</li>
+                            <li>• This dataset is intended for non-commercial research and educational purposes unless otherwise stated by the data providers.</li>
                         </ul>
                     </div>
                 </div>
@@ -336,116 +388,140 @@
                 <div id="schema-tab" class="tab-content hidden">
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
                     
+                    <p class="text-gray-600 mb-4">
+                        The NYC Commuting dataset is stored in a cluster-based layout. All 2,152 census tracts are 
+                        partitioned into k-means clusters (each cluster containing on average about 15 tracts). For each 
+                        cluster, there is a folder containing four NumPy <code>.npy</code> arrays. Within a cluster, all arrays 
+                        share the same tract ordering, so row/column indices are consistent across flows, features, 
+                        distances, and adjacency.
+                    </p>
+                    
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field Name</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">File</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Shape</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">timestamp</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">datetime</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Measurement timestamp (UTC)</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">2023-01-01 08:00:00</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                        OD flow matrix (<code>od_flow.npy</code>)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        <code>(N_c, N_c)</code>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">
+                                        Commuting OD flow counts between census tracts inside the cluster. Entry <code>[i, j]</code> 
+                                        is the number of commuters from tract <code>i</code> to tract <code>j</code> in this cluster 
+                                        (rows and columns are indexed by the local tract list of that cluster).
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        e.g., <code>od_flow[3, 7] = 128</code>
+                                    </td>
                                 </tr>
+
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">intersection_id</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Unique intersection identifier</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">INT_001_42ST_BROADWAY</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                        Feature matrix (<code>features.npy</code>)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        <code>(N_c, F)</code>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">
+                                        Tract-level feature vectors within the cluster. Each row corresponds to a census tract, and 
+                                        each column corresponds to a feature (e.g., PLUTO-derived building/land-use indicators, 
+                                        density measures, or other socio-economic attributes).
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        e.g., <code>features[3]</code> is the feature vector for tract <code>i = 3</code> in this cluster
+                                    </td>
                                 </tr>
+
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">vehicle_count</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">integer</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Number of vehicles in 15-minute window</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">247</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                        Distance matrix (<code>dist.npy</code>)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        <code>(N_c, N_c)</code>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">
+                                        Pairwise distances between tracts in kilometers (e.g., centroid-to-centroid or OSRM-based 
+                                        travel distance) for tracts within the cluster. Entry <code>[i, j]</code> is the distance from 
+                                        tract <code>i</code> to tract <code>j</code>.
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        e.g., <code>dist[3, 7] = 4.2</code>
+                                    </td>
                                 </tr>
+
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">avg_speed_mph</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Average vehicle speed in miles per hour</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">12.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">weather_condition</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Weather condition during measurement</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">Clear, Rain, Snow, Fog</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">borough</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">NYC borough location</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">Manhattan, Brooklyn, Queens, Bronx, Staten Island</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">latitude</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Intersection latitude coordinate</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">40.7589</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">longitude</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Intersection longitude coordinate</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">-73.9851</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                        Adjacency matrix (<code>adj.npy</code>)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        <code>(N_c, N_c)</code>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">
+                                        Binary or weighted adjacency between tracts within the cluster, representing the underlying 
+                                        graph structure (e.g., geographic contiguity or network connectivity). Entry <code>[i, j]</code> 
+                                        is non-zero if tracts <code>i</code> and <code>j</code> are connected.
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        e.g., <code>adj[3, 7] = 1</code> if tracts 3 and 7 are neighbors
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+
+                    <p class="text-gray-600 mt-6 text-sm">
+                        Conceptually, these cluster-level matrices encode the same information as a global tract-level OD table, 
+                        feature table, distance matrix, and adjacency matrix, but are partitioned by k-means clusters to create 
+                        smaller, denser subgraphs that are convenient for training neural network models.
+                    </p>
                 </div>
+
 
                 <!-- Citation Tab -->
                 <div id="citation-tab" class="tab-content hidden">
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">How to Cite</h3>
                     
                     <div class="space-y-8">
-                        <!-- BibTeX -->
+                        <!-- GMEL paper -->
                         <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">BibTeX</h4>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-3">Methodology and Original Study (GMEL)</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">@dataset{nyc_traffic_2023,
-  title = {NYC Traffic Flow 2023},
-  author = {NYC Department of Transportation},
-  year = {2023},
-  publisher = {DataHub},
-  url = {https://datahub.example.com/datasets/nyc-traffic-flow-2023},
-  note = {Accessed: 2024-01-15}
+                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="gmel-citation">
+@inproceedings{liu2020gmel,
+  title     = {Learning Geo-Contextual Embeddings for Commuting Flow Prediction},
+  author    = {Liu, Zhicheng and Miranda, Fabio and Xiong, Weiting and Yang, Junyan and Wang, Qiao and Silva, Claudio T.},
+  booktitle = {Proceedings of the Thirty-Fourth AAAI Conference on Artificial Intelligence (AAAI-20)},
+  pages     = {808--816},
+  year      = {2020}
 }</pre>
-                                <button onclick="copyToClipboard('bibtex-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                                <button onclick="copyToClipboard('gmel-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
                                 </button>
                             </div>
                         </div>
 
-                        <!-- APA -->
+                        <!-- This dataset -->
                         <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">APA Style</h4>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-3">NYC Commuting Processed Dataset</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <p class="text-sm text-gray-800" id="apa-citation">
-                                    NYC Department of Transportation. (2023). <em>NYC Traffic Flow 2023</em> [Dataset]. DataHub. 
-                                    https://datahub.example.com/datasets/nyc-traffic-flow-2023
-                                </p>
-                                <button onclick="copyToClipboard('apa-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
-                                    Copy
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Chicago -->
-                        <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">Chicago Style</h4>
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <p class="text-sm text-gray-800" id="chicago-citation">
-                                    NYC Department of Transportation. "NYC Traffic Flow 2023." Dataset. DataHub, 2023. 
-                                    https://datahub.example.com/datasets/nyc-traffic-flow-2023.
-                                </p>
-                                <button onclick="copyToClipboard('chicago-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="dataset-citation">
+@dataset{nyc_commuting_2025,
+  title   = {NYC Commuting},
+  author  = {CILAB Urban Data Lab},
+  year    = {2025},
+  note    = {Processed tract-level commuting OD flows and features for New York City},
+  url     = {https://cilab-urbandata.github.io/datasets/nyc-commuting/}
+}</pre>
+                                <button onclick="copyToClipboard('dataset-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
                                 </button>
                             </div>
@@ -491,7 +567,6 @@
             const text = element.textContent || element.innerText;
             
             navigator.clipboard.writeText(text).then(() => {
-                // Show feedback
                 const button = element.parentElement.querySelector('button');
                 const originalText = button.textContent;
                 button.textContent = 'Copied!';
@@ -504,7 +579,6 @@
             });
         }
 
-        // Initialize tabs on page load
         document.addEventListener('DOMContentLoaded', initTabs);
     </script>
 </body>
