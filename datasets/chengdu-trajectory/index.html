@@ -1,1 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chengdu Map-Matched Taxi Trajectories - Urban Datasets</title>
+  <meta name="description" content="Map-matched taxi trajectories on an OpenStreetMap road network for Chengdu. 61,548 trajectories; 107,655 road segments; 2016-11-01 to 2016-11-08 (UTC)." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              900: '#0f172a'
+            },
+            accent: { 500: '#8b5cf6', 600: '#7c3aed' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans">
+  <!-- Navigation -->
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="/" class="text-xl font-bold text-primary-900">Urban Datasets</a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+          <a href="/" class="text-gray-700 hover:text-primary-600 transition-colors">Home</a>
+          <a href="/datasets/" class="text-gray-700 hover:text-primary-600 transition-colors">Browse Datasets</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Breadcrumb -->
+    <nav class="flex mb-8" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="/" class="text-gray-700 hover:text-primary-600">Home</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <a href="/datasets/" class="text-gray-700 hover:text-primary-600">Datasets</a>
+          </div>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <span class="text-gray-500">Chengdu Map-Matched Taxi Trajectories</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-8">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <div class="flex items-center gap-4 mb-4">
+            <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
+            <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
+            <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">Map-Matched</span>
+          </div>
+          <h1 class="text-4xl font-bold text-primary-900 mb-4">Chengdu Map-Matched Taxi Trajectories</h1>
+          <p class="text-xl text-gray-600 max-w-4xl">
+            Map-matched taxi trajectories stored as a headerless CSV with serialized lists
+            (<strong>offsets</strong> + <strong>road segment sequence</strong>), paired with an OpenStreetMap-derived road network
+            (<code>map/nodes.shp</code>, <code>map/edges.shp</code>).
+          </p>
+        </div>
+      </div>
+
+      <!-- Key Facts -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">61,548</div>
+          <div class="text-sm text-gray-600">Trajectories</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">107,655</div>
+          <div class="text-sm text-gray-600">Road Segments (edges)</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">2016-11-01 → 2016-11-08</div>
+          <div class="text-sm text-gray-600">Time Range (UTC)</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <div class="text-2xl font-bold text-accent-500 mb-1">~39 MB</div>
+          <div class="text-sm text-gray-600">Dataset Size</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="border-b border-gray-200">
+        <nav class="-mb-px flex space-x-8 px-8">
+          <button class="tab-button active py-4 px-1 border-b-2 border-accent-500 font-medium text-sm text-accent-600" data-tab="overview">Overview</button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="metadata">Metadata</button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="download">Download</button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="schema">Schema</button>
+          <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="citation">Citation</button>
+        </nav>
+      </div>
+
+      <div class="p-8">
+        <!-- Overview -->
+        <div id="overview-tab" class="tab-content">
+          <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
+          <div class="prose max-w-none text-gray-600 mb-8">
+            <p class="mb-4">
+              Trajectories are map-matched onto a road network and represented as a sequence of road segments with timestamps.
+              Trajectory files are headerless CSV files containing serialized lists for offsets and segment sequences.
+            </p>
+            <p class="mb-4">
+              Computed statistics (UTC): <strong>min</strong> 2016-11-01T00:04:15Z, <strong>max</strong> 2016-11-08T23:59:59Z.
+              Total trajectories: <strong>61,548</strong>. Road segments (edges): <strong>107,655</strong>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Metadata -->
+        <div id="metadata-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Dataset Metadata</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <table class="w-full">
+                <tbody class="divide-y divide-gray-200">
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Title</td>
+                    <td class="py-3 text-sm text-gray-900">Chengdu Map-Matched Taxi Trajectories</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
+                    <td class="py-3 text-sm text-gray-900">Transportation</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Geographic Coverage</td>
+                    <td class="py-3 text-sm text-gray-900">Chengdu, China</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage (UTC)</td>
+                    <td class="py-3 text-sm text-gray-900">2016-11-01 00:04:15 → 2016-11-08 23:59:59</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Created</td>
+                    <td class="py-3 text-sm text-gray-900">2025-12-05</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Last Updated</td>
+                    <td class="py-3 text-sm text-gray-900">2025-12-05</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <table class="w-full">
+                <tbody class="divide-y divide-gray-200">
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Trajectory Files</td>
+                    <td class="py-3 text-sm text-gray-900">traj_train.csv / traj_valid.csv / traj_test.csv</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Road Network</td>
+                    <td class="py-3 text-sm text-gray-900">map/nodes.shp, map/edges.shp</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Trajectories</td>
+                    <td class="py-3 text-sm text-gray-900">61,548</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Road Segments (edges)</td>
+                    <td class="py-3 text-sm text-gray-900">107,655</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Format</td>
+                    <td class="py-3 text-sm text-gray-900">Headerless CSV + Shapefile</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-sm font-medium text-gray-500">Dataset Size</td>
+                    <td class="py-3 text-sm text-gray-900">39,929 KB (~39.0 MB) / 40,887,296 bytes</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <h5 class="font-medium text-yellow-900 mb-2">Note</h5>
+            <p class="text-sm text-yellow-800">
+              Trajectory CSV files are headerless and include serialized lists; always parse using a real CSV parser.
+            </p>
+          </div>
+        </div>
+
+        <!-- Download -->
+        <div id="download-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Download</h3>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="border border-gray-200 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-primary-900 mb-2">Dataset Files</h4>
+              <p class="text-gray-600 mb-4">
+                Download link is currently not published.
+              </p>
+
+              <a class="block text-center bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium cursor-not-allowed select-none"
+                 href="javascript:void(0)" aria-disabled="true">
+                Download Unavailable
+              </a>
+            </div>
+
+            <div class="border border-gray-200 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-primary-900 mb-2">Included Structure</h4>
+              <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-700">
+                <ul class="list-disc pl-5 space-y-1">
+                  <li><code>traj_train.csv</code>, <code>traj_valid.csv</code>, <code>traj_test.csv</code></li>
+                  <li><code>map/nodes.shp</code>, <code>map/edges.shp</code></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schema -->
+        <div id="schema-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
+
+          <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p class="text-sm text-yellow-900">
+              <strong>Important:</strong> <code>traj_*.csv</code> files are <strong>headerless</strong> and have exactly <strong>4 columns</strong>.
+              Interpret fields by <strong>column position</strong>. Columns 3–4 contain serialized lists (with commas).
+            </p>
+          </div>
+
+          <h4 class="text-lg font-semibold text-primary-900 mb-3">Trajectory files: traj_train.csv / traj_valid.csv / traj_test.csv</h4>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Column</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example (truncated)</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">1</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Moving object id (vehicle/taxi identifier).</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">object_001</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">2</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">Trajectory id.</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">traj_12345:object_001</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">3</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string (serialized list)</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    <strong>Offsets</strong>: serialized list of two tuples (source &amp; destination). Each tuple:
+                    <code>(distance_from_segment_start, depart_or_arrive_time, lon, lat)</code>.
+                  </td>
+                  <td class="px-4 py-3 text-sm text-gray-500">
+                    [(12.3, 1477959000, 104.0667, 30.5728), (98.7, 1477959300, 104.0701, 30.5742)]
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-sm font-medium text-gray-900">4</td>
+                  <td class="px-4 py-3 text-sm text-gray-500">string (serialized list)</td>
+                  <td class="px-4 py-3 text-sm text-gray-600">
+                    <strong>Segment sequence</strong>: serialized list of segment records. Each record:
+                    <code>[segment_id, enter_timestamp, average_speed, duration]</code>.
+                    The effective segment end time is <code>enter_timestamp + duration</code>.
+                  </td>
+                  <td class="px-4 py-3 text-sm text-gray-500">
+                    [[123, 1477959000.0, 8.2, 12.0], [456, 1477959012.0, 7.9, 25.0], ...]
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="text-lg font-semibold text-primary-900 mb-3">Road network files: map/nodes.shp &amp; map/edges.shp</h4>
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-gray-700">
+            <ul class="list-disc pl-5 space-y-1 text-sm">
+              <li><code>nodes.shp</code>: OSM node information (graph nodes).</li>
+              <li><code>edges.shp</code>: OSM edge/segment information (graph edges). Total edges: <strong>107,655</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p class="text-sm text-blue-900">
+              Parsing tip: because columns 3–4 contain list strings with commas, use a proper CSV parser
+              (e.g., Python <code>csv</code>/<code>pandas</code>) rather than splitting by comma.
+            </p>
+          </div>
+        </div>
+
+        <!-- Citation -->
+        <div id="citation-tab" class="tab-content hidden">
+          <h3 class="text-xl font-semibold text-primary-900 mb-6">Citation</h3>
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <p class="text-sm text-gray-800">
+              Please cite the original data source and preprocessing/pipeline used, if applicable.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function initTabs() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetTab = button.getAttribute('data-tab');
+
+          tabButtons.forEach(btn => {
+            btn.classList.remove('border-accent-500', 'text-accent-600');
+            btn.classList.add('border-transparent', 'text-gray-500');
+          });
+
+          tabContents.forEach(content => content.classList.add('hidden'));
+
+          button.classList.remove('border-transparent', 'text-gray-500');
+          button.classList.add('border-accent-500', 'text-accent-600');
+
+          document.getElementById(targetTab + '-tab').classList.remove('hidden');
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initTabs);
+  </script>
+</body>
+</html>
 
