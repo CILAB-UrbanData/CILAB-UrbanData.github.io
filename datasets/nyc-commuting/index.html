@@ -82,7 +82,7 @@
                         <span class="font-semibold">2,152 New York City census tracts</span>, enriched with land-use and 
                         infrastructure indicators. This dataset follows the Geo-Contextual Multitask Embedding Learner 
                         (GMEL) setting for commuting flow prediction and is suitable for graph-based and traditional 
-                        flow models.:contentReference[oaicite:1]{index=1}
+                        flow models.
                     </p>
                 </div>
             </div>
@@ -143,7 +143,7 @@
                             commuting from a home tract to a work tract. The dataset is derived from the 
                             2015 Longitudinal Employer–Household Dynamics Origin–Destination Employment Statistics 
                             (LODES) and NYC PLUTO land-use data, following the setup used in the GMEL model 
-                            for commuting flow prediction.:contentReference[oaicite:2]{index=2}
+                            for commuting flow prediction.
                         </p>
                         <p class="mb-4">
                             For each tract, the dataset aggregates key urban indicators (e.g., building counts, land-use 
@@ -157,44 +157,6 @@
                             benchmarking, graph representation learning, and broader urban analytics that require a 
                             compact, tract-level OD network of New York City.
                         </p>
-                    </div>
-
-                    <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview (Illustrative)</h4>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">origin_tract</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">dest_tract</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">flow</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">distance_km</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">origin_feature_example</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">36061000100</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">36061000500</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">128</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">4.2</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">res_building_density = 0.35</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">36061000100</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">36061001000</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">64</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">7.8</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">office_landuse_ratio = 0.12</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">36047010100</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">36047010500</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">203</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">3.6</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">avg_floor_area_ratio = 2.1</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
 
@@ -220,7 +182,7 @@
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
                                         <td class="py-3 text-sm text-gray-900">
-                                            2015 commuting flows (LODES) and 2015 land-use indicators (PLUTO).:contentReference[oaicite:3]{index=3}
+                                            2015 commuting flows (LODES) and 2015 land-use indicators (PLUTO).
                                         </td>
                                     </tr>
                                     <tr>
@@ -234,7 +196,7 @@
                                         <td class="py-3 text-sm text-gray-900">
                                             LODES 2015 OD Employment Statistics (US Census Bureau), 
                                             NYC PLUTO 2015 (NYC Department of City Planning), 
-                                            OSRM/OSM distances between tract centroids.:contentReference[oaicite:4]{index=4}
+                                            OSRM/OSM distances between tract centroids.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -409,7 +371,7 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-medium text-gray-900">
-                                        OD flow matrix (<code>od_flow.npy</code>)
+                                        OD flow matrix (<code>od.npy</code>)
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">
                                         <code>(N_c, N_c)</code>
@@ -420,13 +382,13 @@
                                         (rows and columns are indexed by the local tract list of that cluster).
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">
-                                        e.g., <code>od_flow[3, 7] = 128</code>
+                                        e.g., <code>od[3, 7] = 128</code>
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-medium text-gray-900">
-                                        Feature matrix (<code>features.npy</code>)
+                                        Feature matrix (<code>nfeat.npy</code>)
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">
                                         <code>(N_c, F)</code>
@@ -437,13 +399,13 @@
                                         density measures, or other socio-economic attributes).
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">
-                                        e.g., <code>features[3]</code> is the feature vector for tract <code>i = 3</code> in this cluster
+                                        e.g., <code>nfeat[3]</code> is the feature vector for tract <code>i = 3</code> in this cluster
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td class="px-4 py-3 text-sm font-medium text-gray-900">
-                                        Distance matrix (<code>dist.npy</code>)
+                                        Distance matrix (<code>dis.npy</code>)
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">
                                         <code>(N_c, N_c)</code>
@@ -454,7 +416,7 @@
                                         tract <code>i</code> to tract <code>j</code>.
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">
-                                        e.g., <code>dist[3, 7] = 4.2</code>
+                                        e.g., <code>dis[3, 7] = 4.2</code>
                                     </td>
                                 </tr>
 
