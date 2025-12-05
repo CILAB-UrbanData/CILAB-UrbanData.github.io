@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYC Traffic Flow 2023 - DataHub</title>
-    <meta name="description" content="Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations">
+    <title>NYS Mobility - DataHub</title>
+    <meta name="description" content="Origin–destination mobility flows for New York State derived from the COVID19USFlows dataset and enriched with OpenStreetMap-based geographic features, reformatted into a standardized OD schema for mobility modeling and benchmarking.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -62,7 +62,7 @@
                 <li aria-current="page">
                     <div class="flex items-center">
                         <span class="mx-2 text-gray-400">/</span>
-                        <span class="text-gray-500">NYC Traffic Flow 2023</span>
+                        <span class="text-gray-500">NYS Mobility Flows (COVID19USFlows + OSM)</span>
                     </div>
                 </li>
             </ol>
@@ -74,12 +74,14 @@
                 <div>
                     <div class="flex items-center gap-4 mb-4">
                         <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
-                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation</span>
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Transportation / Mobility</span>
                     </div>
-                    <h1 class="text-4xl font-bold text-primary-900 mb-4">NYC Traffic Flow 2023</h1>
+                    <h1 class="text-4xl font-bold text-primary-900 mb-4">NYS Mobility Flows </h1>
                     <p class="text-xl text-gray-600 max-w-4xl">
-                        Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations. 
-                        This dataset provides detailed insights into urban traffic patterns across all five boroughs.
+                        Origin–destination mobility flows for New York State, derived from the COVID19USFlows dataset
+                        (MIT License) and enriched with OpenStreetMap-based geographic features. The dataset is
+                        reformatted into a standardized OD schema suitable for mobility modeling, flow generation, and
+                        benchmarking in conjunction with gravity, Deep Gravity, and related models.
                     </p>
                 </div>
             </div>
@@ -87,20 +89,20 @@
             <!-- Key Facts Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">2.1M</div>
-                    <div class="text-sm text-gray-600">Records</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">266415</div>
+                    <div class="text-sm text-gray-600">OD Records (NYS census tracts)</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">450 MB</div>
-                    <div class="text-sm text-gray-600">File Size</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">44.5 MB</div>
+                    <div class="text-sm text-gray-600"> Size </div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">2023</div>
-                    <div class="text-sm text-gray-600">Year</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">2019–2021</div>
+                    <div class="text-sm text-gray-600">Temporal Coverage (COVID-19 period)</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="text-2xl font-bold text-accent-500 mb-1">365</div>
-                    <div class="text-sm text-gray-600">Days Covered</div>
+                    <div class="text-2xl font-bold text-accent-500 mb-1">Tract</div>
+                    <div class="text-sm text-gray-600">Census Tract Level Flows</div>
                 </div>
             </div>
         </div>
@@ -135,61 +137,25 @@
                     <h3 class="text-xl font-semibold text-primary-900 mb-4">Dataset Description</h3>
                     <div class="prose max-w-none text-gray-600 mb-8">
                         <p class="mb-4">
-                            This comprehensive dataset captures traffic flow patterns across New York City's major intersections throughout 2023. 
-                            The data includes real-time sensor readings from over 1,200 intersection points across all five boroughs, 
-                            providing unprecedented insight into urban mobility patterns.
+                            This dataset contains origin–destination (OD) mobility flows within New York State, derived
+                            from the <span class="font-semibold">COVID19USFlows</span> dataset (MIT License) and reformatted into a
+                            standardized OD schema compatible with LargeCommutingOD-style experiments. The underlying
+                            flows capture movements between census tracts during the COVID-19 period, as described in
+                            the associated data descriptor and widely used in mobility and epidemic modeling studies.
                         </p>
                         <p class="mb-4">
-                            Each record contains detailed information about vehicle counts, traffic speeds, intersection coordinates, 
-                            weather conditions, and temporal metadata. The dataset has been processed to remove personally identifiable 
-                            information while maintaining statistical accuracy for research purposes.
+                            In addition to OD flows, each tract is enriched with geographic features derived from
+                            <span class="font-semibold">OpenStreetMap</span>, such as land-use areas, road network length, and facilities related
+                            to transport, food, health, education, and retail. These OSM-based features are aggregated at
+                            the tract level (e.g., counts or densities of specific POI categories) and combined with OD
+                            flows to form a unified, feature-rich OD dataset suitable for gravity and Deep Gravity–style
+                            models that exploit geographic context.
                         </p>
                         <p>
-                            This dataset is particularly valuable for urban planning research, traffic optimization studies, 
-                            and machine learning applications focused on transportation systems.
+                            This dataset is particularly valuable for research on human mobility modeling, OD flow
+                            generation, gravity/deep gravity models, and machine learning applications that require
+                            realistic OD matrices with rich contextual features for benchmarking and evaluation.
                         </p>
-                    </div>
-
-                    <h4 class="text-lg font-semibold text-primary-900 mb-4">Sample Data Preview</h4>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Intersection ID</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vehicle Count</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Avg Speed (mph)</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weather</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Borough</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:00:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_001_42ST_BROADWAY</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">247</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">12.3</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Manhattan</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:15:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_002_34ST_7AVE</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">189</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">15.7</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Manhattan</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm text-gray-900">2023-01-01 08:30:00</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">INT_003_ATLANTIC_FLATBUSH</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">156</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">18.2</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Clear</td>
-                                    <td class="px-4 py-3 text-sm text-gray-900">Brooklyn</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
 
@@ -202,27 +168,34 @@
                                 <tbody class="divide-y divide-gray-200">
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Title</td>
-                                        <td class="py-3 text-sm text-gray-900">NYC Traffic Flow 2023</td>
+                                        <td class="py-3 text-sm text-gray-900">NYS Mobility</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Domain</td>
-                                        <td class="py-3 text-sm text-gray-900">Transportation</td>
+                                        <td class="py-3 text-sm text-gray-900">Transportation / Mobility</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Geographic Coverage</td>
-                                        <td class="py-3 text-sm text-gray-900">New York City, USA</td>
+                                        <td class="py-3 text-sm text-gray-900">New York State, USA (census tracts)</td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Temporal Coverage</td>
-                                        <td class="py-3 text-sm text-gray-900">January 1, 2023 - December 31, 2023</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            2019–2021 (COVID-19 mobility period; exact range depends on selected flows)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Update Frequency</td>
-                                        <td class="py-3 text-sm text-gray-900">Real-time (15-minute intervals)</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            Static (historical dataset; no real-time updates)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Data Source</td>
-                                        <td class="py-3 text-sm text-gray-900">NYC Department of Transportation</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            COVID19USFlows (New York State subset, MIT License) +
+                                            OpenStreetMap Contributors (POI and geographic features)
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -232,27 +205,43 @@
                                 <tbody class="divide-y divide-gray-200">
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">License</td>
-                                        <td class="py-3 text-sm text-gray-900">Creative Commons Attribution 4.0</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            Mixed: MIT License (for flows derived from COVID19USFlows) and ODbL-compliant
+                                            terms (for OSM-derived geographic features). Any public redistribution of this
+                                            dataset must preserve the COVID19USFlows MIT license notice and comply with
+                                            OpenStreetMap’s attribution and share-alike requirements.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Format</td>
-                                        <td class="py-3 text-sm text-gray-900">CSV, JSON</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            One folder per county, each containing four NumPy <code>.npy</code> arrays 
+                                            (OD flow matrix, tract feature matrix, distance matrix, adjacency matrix).
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">File Size</td>
-                                        <td class="py-3 text-sm text-gray-900">450 MB (compressed)</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            44.5 MB
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Records</td>
-                                        <td class="py-3 text-sm text-gray-900">2,100,000</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            266415
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Last Updated</td>
-                                        <td class="py-3 text-sm text-gray-900">January 15, 2024</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            2025 (processed into standardized OD + OSM feature schema)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-3 text-sm font-medium text-gray-500">Version</td>
-                                        <td class="py-3 text-sm text-gray-900">1.2</td>
+                                        <td class="py-3 text-sm text-gray-900">
+                                            v1.0 (CILAB processed NYS OD &amp; OSM-derived dataset)
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -262,72 +251,84 @@
 
                 <!-- Download Tab -->
                 <div id="download-tab" class="tab-content hidden">
-                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Download Options</h3>
+                    <h3 class="text-xl font-semibold text-primary-900 mb-6">Download &amp; Access</h3>
                     
                     <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Original Dataset -->
+                        <!-- Original Source Datasets -->
                         <div class="border border-gray-200 rounded-lg p-6">
-                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Original Dataset</h4>
-                            <p class="text-gray-600 mb-4">Raw data as collected from NYC DOT sensors with minimal processing.</p>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-4">Original Source Datasets</h4>
+                            <p class="text-gray-600 mb-4">
+                                The New York State mobility flows are originally provided by the 
+                                <span class="font-semibold">COVID19USFlows</span> project under the MIT License. Geographic features 
+                                (POIs, land use, road network, etc.) are derived from 
+                                <span class="font-semibold">OpenStreetMap</span>, which is available under the Open Database License (ODbL)
+                                and requires proper attribution and share-alike for derivative databases.
+                            </p>
                             
-                            <div class="space-y-3 mb-6">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Format:</span>
-                                    <span class="text-gray-900">CSV</span>
+                            <div class="space-y-3 mb-6 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Flows Repository:</span>
+                                    <a href="https://github.com/GeoDS/COVID19USFlows"
+                                       class="text-accent-600 hover:text-accent-500"
+                                       target="_blank" rel="noopener noreferrer">
+                                        COVID19USFlows (GitHub)
+                                    </a>
                                 </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Size:</span>
-                                    <span class="text-gray-900">450 MB</span>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">OSM Data:</span>
+                                    <a href="https://www.openstreetmap.org"
+                                       class="text-accent-600 hover:text-accent-500"
+                                       target="_blank" rel="noopener noreferrer">
+                                        OpenStreetMap Contributors
+                                    </a>
                                 </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Checksum (SHA256):</span>
-                                    <span class="text-gray-900 font-mono text-xs">a1b2c3d4e5f6...</span>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Licenses:</span>
+                                    <span class="text-gray-900">
+                                        MIT (flows), ODbL (OSM-derived features)
+                                    </span>
                                 </div>
                             </div>
-                            
-                            <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                Download Original (CSV)
-                            </button>
                         </div>
 
-                        <!-- Processed Dataset -->
+                        <!-- Processed Dataset (Direct Download) -->
                         <div class="border border-gray-200 rounded-lg p-6">
                             <h4 class="text-lg font-semibold text-primary-900 mb-4">Processed Dataset</h4>
-                            <p class="text-gray-600 mb-4">Cleaned and normalized data with additional derived features.</p>
+                            <p class="text-gray-600 mb-4">
+                                This portal provides a processed version of the New York State OD flows enriched with 
+                                OSM-derived geographic features and a standardized schema. The processed dataset is 
+                                organized as one folder per county, and each county folder contains four NumPy 
+                                <code>.npy</code> arrays that encode OD flows, tract-level features, pairwise distances, 
+                                and adjacency relations between census tracts.
+                            </p>
                             
-                            <div class="space-y-3 mb-6">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Format:</span>
-                                    <span class="text-gray-900">JSON, Parquet</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Size:</span>
-                                    <span class="text-gray-900">380 MB</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Checksum (SHA256):</span>
-                                    <span class="text-gray-900 font-mono text-xs">f6e5d4c3b2a1...</span>
+                            <div class="space-y-3 mb-6 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Processed Data:</span>
+                                    <a href="to-be-updated"
+                                    class="text-accent-600 hover:text-accent-500"
+                                    target="_blank" rel="noopener noreferrer">
+                                        Download county-level <code>.npy</code> folders (ZIP)
+                                    </a>
                                 </div>
                             </div>
-                            
-                            <div class="space-y-2">
-                                <button class="w-full bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                    Download Processed (JSON)
-                                </button>
-                                <button class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                                    Download Processed (Parquet)
-                                </button>
-                            </div>
+
+                            <p class="text-xs text-gray-500 mt-4">
+                                The processed dataset is distributed as a ZIP archive. After extraction, each county 
+                                directory contains four NumPy arrays: <code>od_flow.npy</code>, <code>features.npy</code>, 
+                                <code>dist.npy</code>, and <code>adj.npy</code> (exact filenames may vary in your implementation).
+                            </p>
                         </div>
+
                     </div>
 
                     <!-- Download Terms -->
                     <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                         <h5 class="font-medium text-blue-900 mb-2">Download Terms</h5>
                         <ul class="text-sm text-blue-800 space-y-1">
-                            <li>• Attribution required when using this dataset</li>
-                            <li>• Commercial use permitted under CC BY 4.0 license</li>
-                            <li>• Please cite this dataset in any publications</li>
+                            <li>• COVID19USFlows is released under the MIT License; any redistribution of flows must preserve the original copyright and license notice.</li>
+                            <li>• OSM-derived features must comply with the Open Database License (ODbL), including attribution to OpenStreetMap contributors and share-alike for derivative databases.</li>
+                            <li>• When using this processed dataset, please cite the COVID19USFlows dataset, relevant methodological work (e.g., Deep Gravity), and this processed dataset if appropriate.</li>
                         </ul>
                     </div>
                 </div>
@@ -336,86 +337,126 @@
                 <div id="schema-tab" class="tab-content hidden">
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">Data Schema</h3>
                     
+                    <p class="text-gray-600 mb-4">
+                        The processed NYS Mobility Flows dataset is stored in a directory-based layout. For each county, 
+                        there is a dedicated folder containing four NumPy <code>.npy</code> arrays. All arrays within a county 
+                        share the same tract ordering along their first (and, where applicable, second) dimension, so that 
+                        indices are consistent across flows, features, distances, and adjacency.
+                    </p>
+                    
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Field Name</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data Type</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">File</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Shape</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Example</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">timestamp</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">datetime</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Measurement timestamp (UTC)</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">2023-01-01 08:00:00</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                        OD flow matrix (<code>od_flow.npy</code>)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        <code>(N, N)</code>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">
+                                        OD flow counts between census tracts within the county. Entry 
+                                        <code>[i, j]</code> is the number of trips from tract <code>i</code> to tract <code>j</code> 
+                                        over the aggregated time window.
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        e.g., <code>od_flow[3, 7] = 124</code>
+                                    </td>
                                 </tr>
+
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">intersection_id</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Unique intersection identifier</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">INT_001_42ST_BROADWAY</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                        Feature matrix (<code>features.npy</code>)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        <code>(N, F)</code>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">
+                                        Tract-level feature vectors. Each row corresponds to a census tract, and each column 
+                                        corresponds to a feature (e.g., population, ACS indicators, and OSM-derived POI or 
+                                        land-use statistics).
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        e.g., <code>features[3]</code> is the feature vector for tract <code>i = 3</code>
+                                    </td>
                                 </tr>
+
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">vehicle_count</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">integer</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Number of vehicles in 15-minute window</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">247</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                        Distance matrix (<code>dist.npy</code>)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        <code>(N, N)</code>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">
+                                        Pairwise distances between census tracts in kilometers (e.g., centroid-to-centroid 
+                                        great-circle distance). Entry <code>[i, j]</code> is the distance from tract <code>i</code> 
+                                        to tract <code>j</code>.
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        e.g., <code>dist[3, 7] = 5.3</code>
+                                    </td>
                                 </tr>
+
                                 <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">avg_speed_mph</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Average vehicle speed in miles per hour</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">12.3</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">weather_condition</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Weather condition during measurement</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">Clear, Rain, Snow, Fog</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">borough</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">string</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">NYC borough location</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">Manhattan, Brooklyn, Queens, Bronx, Staten Island</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">latitude</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Intersection latitude coordinate</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">40.7589</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">longitude</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">float</td>
-                                    <td class="px-4 py-3 text-sm text-gray-600">Intersection longitude coordinate</td>
-                                    <td class="px-4 py-3 text-sm text-gray-500">-73.9851</td>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                        Adjacency matrix (<code>adj.npy</code>)
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        <code>(N, N)</code>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">
+                                        Binary or weighted adjacency between census tracts, representing the underlying 
+                                        graph structure (e.g., shared boundary or network connectivity). Entry <code>[i, j]</code> 
+                                        is non-zero if tracts <code>i</code> and <code>j</code> are adjacent/connected.
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-500">
+                                        e.g., <code>adj[3, 7] = 1</code> if tracts 3 and 7 are neighbors
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+
+                    <p class="text-gray-600 mt-6 text-sm">
+                        Conceptually, these four arrays for each county encode the same information that would appear in a 
+                        tract-level OD table with flow, distance, feature, and adjacency fields, but in a dense matrix form 
+                        optimized for numerical computation (e.g., PyTorch, NumPy).
+                    </p>
                 </div>
+
 
                 <!-- Citation Tab -->
                 <div id="citation-tab" class="tab-content hidden">
                     <h3 class="text-xl font-semibold text-primary-900 mb-6">How to Cite</h3>
                     
+                    <p class="text-gray-600 mb-6">
+                        If you use the NYS Mobility Flows dataset or any derived data in your research, please cite 
+                        the original mobility dataset (COVID19USFlows), relevant methodological work (e.g., Deep Gravity), 
+                        and this processed dataset if appropriate.
+                    </p>
+                    
                     <div class="space-y-8">
-                        <!-- BibTeX -->
+                        <!-- COVID19USFlows (original data source) -->
                         <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">BibTeX</h4>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-3">Original Dataset (COVID19USFlows)</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">@dataset{nyc_traffic_2023,
-  title = {NYC Traffic Flow 2023},
-  author = {NYC Department of Transportation},
-  year = {2023},
-  publisher = {DataHub},
-  url = {https://datahub.example.com/datasets/nyc-traffic-flow-2023},
-  note = {Accessed: 2024-01-15}
+                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="bibtex-citation">
+@article{kang2020covid19usflows,
+  title   = {Multiscale Dynamic Human Mobility Flow Dataset in the U.S. during the COVID-19 Epidemic},
+  author  = {Kang, Yuhao and Gao, Song and Liang, Yunlei and Li, Mingxiao and Kruse, Jake},
+  journal = {Scientific Data},
+  volume  = {7},
+  pages   = {390},
+  year    = {2020}
 }</pre>
                                 <button onclick="copyToClipboard('bibtex-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
@@ -423,33 +464,42 @@
                             </div>
                         </div>
 
-                        <!-- APA -->
+                        <!-- Deep Gravity (methodology) -->
                         <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">APA Style</h4>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-3">Deep Gravity (Methodology)</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <p class="text-sm text-gray-800" id="apa-citation">
-                                    NYC Department of Transportation. (2023). <em>NYC Traffic Flow 2023</em> [Dataset]. DataHub. 
-                                    https://datahub.example.com/datasets/nyc-traffic-flow-2023
-                                </p>
-                                <button onclick="copyToClipboard('apa-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                                <pre class="text-sm text-gray-800 whitespace-pre-wrap" id="dgm-citation">
+@article{simini2021deepgravity,
+  title   = {A Deep Gravity Model for Mobility Flows Generation},
+  author  = {Simini, Filippo and Barlacchi, Gianni and Luca, Massimiliano and Pappalardo, Luca},
+  journal = {Nature Communications},
+  volume  = {12},
+  pages   = {6576},
+  year    = {2021}
+}</pre>
+                                <button onclick="copyToClipboard('dgm-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Chicago -->
+                        <!-- This processed dataset (optional) -->
                         <div>
-                            <h4 class="text-lg font-semibold text-primary-900 mb-3">Chicago Style</h4>
+                            <h4 class="text-lg font-semibold text-primary-900 mb-3">This Processed NYS Mobility Flows Dataset</h4>
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 relative">
-                                <p class="text-sm text-gray-800" id="chicago-citation">
-                                    NYC Department of Transportation. "NYC Traffic Flow 2023." Dataset. DataHub, 2023. 
-                                    https://datahub.example.com/datasets/nyc-traffic-flow-2023.
+                                <p class="text-sm text-gray-800" id="nys-processed-citation">
+                                    CILAB Urban Data Lab. (2025). <em>NYS Mobility Flows (COVID19USFlows + OSM-derived)</em> [Dataset]. 
+                                    DataHub. Dataset URL: https://cilab-urbandata.github.io/datasets/nys-mobility/
                                 </p>
-                                <button onclick="copyToClipboard('chicago-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
+                                <button onclick="copyToClipboard('nys-processed-citation')" class="absolute top-2 right-2 bg-white hover:bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm border border-gray-300">
                                     Copy
                                 </button>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="mt-8 text-xs text-gray-500">
+                        OpenStreetMap data © OpenStreetMap contributors. Data is available under the Open Database License (ODbL).
                     </div>
                 </div>
             </div>
@@ -491,7 +541,6 @@
             const text = element.textContent || element.innerText;
             
             navigator.clipboard.writeText(text).then(() => {
-                // Show feedback
                 const button = element.parentElement.querySelector('button');
                 const originalText = button.textContent;
                 button.textContent = 'Copied!';
@@ -504,7 +553,6 @@
             });
         }
 
-        // Initialize tabs on page load
         document.addEventListener('DOMContentLoaded', initTabs);
     </script>
 </body>
