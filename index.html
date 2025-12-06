@@ -85,19 +85,22 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-accent-500 mb-2">12</div>
+                    <div id="stat-datasets" class="text-3xl font-bold text-accent-500 mb-2">0</div>
                     <div class="text-gray-600">Datasets</div>
                 </div>
+
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-accent-500 mb-2">11</div>
+                    <div id="stat-cities" class="text-3xl font-bold text-accent-500 mb-2">0</div>
                     <div class="text-gray-600">Cities</div>
                 </div>
+
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-accent-500 mb-2">5</div>
+                    <div id="stat-years" class="text-3xl font-bold text-accent-500 mb-2">0</div>
                     <div class="text-gray-600">Years</div>
                 </div>
+
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-accent-500 mb-2">2.1TB</div>
+                    <div id="stat-total" class="text-3xl font-bold text-accent-500 mb-2">0</div>
                     <div class="text-gray-600">Total Data</div>
                 </div>
             </div>
@@ -190,5 +193,53 @@
             menu.classList.toggle('hidden');
         });
     </script>
+
+    <!-- ===== 动态 Quick Stats 脚本（新加） ===== -->
+    <script>
+    async function loadDatasetStats() {
+        // 1. 读取 /datasets/index.html
+        const response = await fetch('/datasets/index.html');
+        const text = await response.text();
+
+        // 2. 找到 const datasets = [ ... ];
+        const match = text.match(/const datasets = (\[.*?\]);/s);
+        if (!match) return;
+
+        // 3. 解析 datasets 数组
+        const datasets = eval(match[1]);
+
+        // === 统计计算 ===
+
+        // (1) 数据集数量
+        const datasetCount = datasets.length;
+
+        // (2) 城市数量（不重复）
+        const cityCount = new Set(datasets.map(d => d.city)).size;
+
+        // (3) 年份数量（用 created 字段）
+        const yearCount = new Set(datasets.map(d => d.created.slice(0, 4))).size;
+
+        // (4) 总数据大小
+        const totalBytes = datasets.reduce((acc, d) => acc + d.sizeBytes, 0);
+
+        function formatBytes(x) {
+            if (x > 1e12) return (x / 1e12).toFixed(1) + 'TB';
+            if (x > 1e9)  return (x / 1e9).toFixed(1)  + 'GB';
+            if (x > 1e6)  return (x / 1e6).toFixed(1)  + 'MB';
+            return x + 'B';
+        }
+
+        const totalData = formatBytes(totalBytes);
+
+        // === 写回主页指定元素 ===
+        document.getElementById('stat-datasets').textContent = datasetCount;
+        document.getElementById('stat-cities').textContent = cityCount;
+        document.getElementById('stat-years').textContent = yearCount;
+        document.getElementById('stat-total').textContent = totalData;
+    }
+
+    loadDatasetStats();
+    </script>
+
 </body>
 </html>
