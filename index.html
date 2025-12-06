@@ -111,52 +111,7 @@
     <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-primary-900 mb-12 text-center">Featured Datasets</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 <!-- Dataset Card 1  -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Active</span>
-                        <span class="text-sm text-gray-500">Large</span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-primary-900 mb-2">NYC Traffic Flow 2023</h3>
-                    <p class="text-gray-600 mb-4">Comprehensive traffic flow data from NYC intersections with real-time sensor readings and weather correlations.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Traffic</span>
-                        <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Weather</span>
-                    </div>
-                    <a href="/datasets/nyc-traffic-flow-2023/" class="text-accent-500 hover:text-accent-600 font-medium">View Details →</a>
-                </div>
-
-                 <!-- Dataset Card 2  -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Active</span>
-                        <span class="text-sm text-gray-500">Medium</span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-primary-900 mb-2">Porto Taxi Trajectory</h3>
-                    <p class="text-gray-600 mb-4">An accurate dataset describing a complete year of the trajectories for all the 442 taxis running in the city of Porto, in Portugal.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Public Transit</span>
-                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Trajectory</span>
-                    </div>
-                    <a href="/datasets/porto-taxi-trajectory/" class="text-accent-500 hover:text-accent-600 font-medium">View Details →</a>
-                </div>
-
-                 <!-- Dataset Card 3  -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Active</span>
-                        <span class="text-sm text-gray-500">Large</span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-primary-900 mb-2">Singapore Traffic Sensors</h3>
-                    <p class="text-gray-600 mb-4">Traffic flow data from 1,200+ sensors across Singapore, including vehicle counts and speed measurements.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Traffic</span>
-                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">IoT</span>
-                    </div>
-                    <a href="/datasets/singapore-traffic/" class="text-accent-500 hover:text-accent-600 font-medium">View Details →</a>
-                </div>
-            </div>
+            <div id="featured-datasets" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>           
         </div>
     </section>
 
@@ -187,58 +142,105 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
     </script>
 
-    <!-- ===== 动态 Quick Stats 脚本（新加） ===== -->
     <script>
-    async function loadDatasetStats() {
-        // 1. 读取 /datasets/index.html
-        const response = await fetch('/datasets/index.html');
-        const text = await response.text();
+    async function loadHomeData() {
+        try {
+            // 1. 读取 /datasets/index.html 页面
+            const res = await fetch('/datasets/index.html');
+            const text = await res.text();
 
-        // 2. 找到 const datasets = [ ... ];
-        const match = text.match(/const datasets = (\[.*?\]);/s);
-        if (!match) return;
+            // 2. 从里面用正则提取 const datasets = [ ... ];
+            const match = text.match(/const datasets = (\[.*?\]);/s);
+            if (!match) {
+                console.error('Cannot find datasets array in /datasets/index.html');
+                return;
+            }
 
-        // 3. 解析 datasets 数组
-        const datasets = eval(match[1]);
+            // 3. 解析成 JS 数组（你控制文件内容，这里用 eval 可以接受）
+            const datasets = eval(match[1]);
 
-        // === 统计计算 ===
+            // =======================
+            // A. 更新 Quick Stats
+            // =======================
+            const datasetCount = datasets.length;
+            const cityCount    = new Set(datasets.map(d => d.city)).size;
+            const yearCount    = new Set(datasets.map(d => d.created.slice(0, 4))).size;
+            const totalBytes   = datasets.reduce((acc, d) => acc + d.sizeBytes, 0);
 
-        // (1) 数据集数量
-        const datasetCount = datasets.length;
+            function formatBytes(x) {
+                if (x > 1e12) return (x / 1e12).toFixed(1) + 'TB';
+                if (x > 1e9)  return (x / 1e9).toFixed(1)  + 'GB';
+                if (x > 1e6)  return (x / 1e6).toFixed(1)  + 'MB';
+                return x + 'B';
+            }
 
-        // (2) 城市数量（不重复）
-        const cityCount = new Set(datasets.map(d => d.city)).size;
+            const totalData = formatBytes(totalBytes);
 
-        // (3) 年份数量（用 created 字段）
-        const yearCount = new Set(datasets.map(d => d.created.slice(0, 4))).size;
+            const elDatasets = document.getElementById('stat-datasets');
+            const elCities   = document.getElementById('stat-cities');
+            const elYears    = document.getElementById('stat-years');
+            const elTotal    = document.getElementById('stat-total');
 
-        // (4) 总数据大小
-        const totalBytes = datasets.reduce((acc, d) => acc + d.sizeBytes, 0);
+            if (elDatasets && elCities && elYears && elTotal) {
+                elDatasets.textContent = datasetCount;
+                elCities.textContent   = cityCount;
+                elYears.textContent    = yearCount;
+                elTotal.textContent    = totalData;
+            }
 
-        function formatBytes(x) {
-            if (x > 1e12) return (x / 1e12).toFixed(1) + 'TB';
-            if (x > 1e9)  return (x / 1e9).toFixed(1)  + 'GB';
-            if (x > 1e6)  return (x / 1e6).toFixed(1)  + 'MB';
-            return x + 'B';
+            // =======================
+            // B. 更新 Featured Datasets（最新 3 个）
+            // =======================
+            const container = document.getElementById('featured-datasets');
+            if (!container) return;
+
+            // 按 created 时间从新到旧排序
+            const sorted = [...datasets].sort(
+                (a, b) => new Date(b.created) - new Date(a.created)
+            );
+            const top3 = sorted.slice(0, 3);
+
+            const cardsHtml = top3.map(dataset => {
+                const statusColor = dataset.status === 'Active' ? 'green' : 'red';
+                const tagsHtml = (dataset.tags || []).slice(0, 3).map(tag => `
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${tag}</span>
+                `).join('');
+
+                return `
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-${statusColor}-100 text-${statusColor}-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                                ${dataset.status}
+                            </span>
+                            <span class="text-sm text-gray-500">${dataset.size}</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-primary-900 mb-2">${dataset.title}</h3>
+                        <p class="text-gray-600 mb-4">${dataset.description}</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${tagsHtml}
+                        </div>
+                        <a href="/datasets/${dataset.id}/" class="text-accent-500 hover:text-accent-600 font-medium">
+                            View Details →
+                        </a>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = cardsHtml;
+
+        } catch (err) {
+            console.error('Failed to load home data:', err);
         }
-
-        const totalData = formatBytes(totalBytes);
-
-        // === 写回主页指定元素 ===
-        document.getElementById('stat-datasets').textContent = datasetCount;
-        document.getElementById('stat-cities').textContent = cityCount;
-        document.getElementById('stat-years').textContent = yearCount;
-        document.getElementById('stat-total').textContent = totalData;
     }
 
-    loadDatasetStats();
+    // 页面加载后执行
+    loadHomeData();
     </script>
 
 </body>
