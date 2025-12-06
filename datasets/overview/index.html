@@ -123,73 +123,75 @@
     </div>
 
     <script>
-        // Dataset data (same as in datasets/index.html)
-        const datasets = [
-            {
-                id: 'nyc-taxi',
-                title: 'NYC Taxi',
-                description: 'Origin-destination taxi data for New York City, along with shapefile, and region-level information.',
-                domain: 'Mobility',
-                country: 'USA',
-                city: 'New York City',
-                status: 'Active',
-                size: 'Small',
-                sizeBytes: 492899328,
-                sizeGB: (492899328 / (1024 ** 3)).toFixed(2),
-                tags: ['Mobility', 'OD','New York State'],
-                lastUpdated: '2025-12-4',
-                created: '2025-12-2'
-            },
-            {
-                id: 'nyc-bike',
-                title: 'NYC Bike',
-                description: 'Origin-destination bike data for New York City.',
-                domain: 'Mobility',
-                country: 'USA',
-                city: 'New York City',
-                status: 'Active',
-                size: 'Small',
-                sizeBytes: 940124160,
-                sizeGB: (940124160 / (1024 ** 3)).toFixed(2),
-                tags: ['Mobility', 'OD','New York State'],
-                lastUpdated: '2025-12-4',
-                created: '2025-12-4'
-            },
-        ];
+        // ===== 1. 全局数据（开始为空，稍后从 /datasets/index.html 读取） =====
+        let datasets = [];
+        let filteredDatasets = [];
 
-        let filteredDatasets = [...datasets];
-
-        // DOM elements
+        // ===== 2. DOM 元素 =====
         const domainFilter = document.getElementById('domain-filter');
         const countryFilter = document.getElementById('country-filter');
         const statusFilter = document.getElementById('status-filter');
         const tableBody = document.getElementById('table-body');
         const exportBtn = document.getElementById('export-csv');
 
-        // Event listeners
-        domainFilter.addEventListener('change', applyFilters);
-        countryFilter.addEventListener('change', applyFilters);
-        statusFilter.addEventListener('change', applyFilters);
-        exportBtn.addEventListener('click', exportToCSV);
+        // ===== 3. 从 /datasets/index.html 读取 datasets 数组 =====
+        async function loadDatasetsFromBrowsePage() {
+            try {
+                // 读取 /datasets/index.html 的源码
+                const res = await fetch('/datasets/index.html');
+                const text = await res.text();
 
+                // 用正则匹配 const datasets = [ ... ];
+                const match = text.match(/const datasets = (\[.*?\]);/s);
+                if (!match) {
+                    console.error('Cannot find datasets array in /datasets/index.html');
+                    return;
+                }
+
+                // 把字符串解析成真正的 JS 数组
+                const rawDatasets = eval(match[1]);
+
+                // 根据 overview 需要的字段做一层映射：
+                // - 计算 sizeGB
+                // - 保证 license / format 至少是空字符串，避免 CSV 里出现 undefined
+                datasets = rawDatasets.map(d => ({
+                    ...d,
+                    sizeGB: d.sizeBytes ? (d.sizeBytes / (1024 ** 3)).toFixed(2) : '',
+                    license: d.license || '',
+                    format: d.format || ''
+                }));
+
+                filteredDatasets = [...datasets];
+                applyFilters();  // 初次渲染表格
+
+            } catch (err) {
+                console.error('Failed to load datasets from /datasets/index.html:', err);
+            }
+        }
+
+        // ===== 4. 过滤逻辑 =====
         function applyFilters() {
             filteredDatasets = datasets.filter(dataset => {
-                return (!domainFilter.value || dataset.domain === domainFilter.value) &&
-                       (!countryFilter.value || dataset.country === countryFilter.value) &&
-                       (!statusFilter.value || dataset.status === statusFilter.value);
+                return (!domainFilter.value  || dataset.domain === domainFilter.value) &&
+                    (!countryFilter.value || dataset.country === countryFilter.value) &&
+                    (!statusFilter.value  || dataset.status === statusFilter.value);
             });
             renderTable();
         }
 
+        // ===== 5. 渲染表格 =====
         function renderTable() {
             tableBody.innerHTML = filteredDatasets.map(dataset => {
                 const statusColor = dataset.status === 'Active' ? 'green' : 'red';
+                const desc = dataset.description || '';
+                const shortDesc = desc.length > 80 ? desc.substring(0, 80) + '...' : desc;
+
                 return `
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div>
                                 <div class="text-sm font-medium text-gray-900">${dataset.title}</div>
-                                <div class="text-sm text-gray-500">${dataset.description.substring(0, 80)}...</div>
+                                <div class="text-sm text-gray-500">${shortDesc}</div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -201,7 +203,7 @@
                             ${dataset.city}, ${dataset.country}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${dataset.sizeGB}GB
+                            ${dataset.sizeGB ? dataset.sizeGB + 'GB' : ''}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-${statusColor}-100 text-${statusColor}-800">
@@ -209,7 +211,7 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            ${new Date(dataset.lastUpdated).toLocaleDateString()}
+                            ${dataset.lastUpdated ? new Date(dataset.lastUpdated).toLocaleDateString() : ''}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <a href="/datasets/${dataset.id}/" class="text-accent-600 hover:text-accent-900">View Details</a>
@@ -219,6 +221,7 @@
             }).join('');
         }
 
+        // ===== 6. 导出 CSV =====
         function exportToCSV() {
             const headers = ['Title', 'Domain', 'City', 'Country', 'Status', 'Size (GB)', 'Last Updated', 'License', 'Format'];
             const csvContent = [
@@ -229,10 +232,10 @@
                     `"${dataset.city}"`,
                     `"${dataset.country}"`,
                     `"${dataset.status}"`,
-                    dataset.sizeGB,
-                    `"${dataset.lastUpdated}"`,
-                    `"${dataset.license}"`,
-                    `"${dataset.format}"`
+                    dataset.sizeGB || '',
+                    `"${dataset.lastUpdated || ''}"`,
+                    `"${dataset.license || ''}"`,
+                    `"${dataset.format || ''}"`
                 ].join(','))
             ].join('\n');
 
@@ -247,8 +250,14 @@
             document.body.removeChild(link);
         }
 
-        // Initial render
-        renderTable();
+        // ===== 7. 事件绑定 & 初始化加载 =====
+        domainFilter.addEventListener('change', applyFilters);
+        countryFilter.addEventListener('change', applyFilters);
+        statusFilter.addEventListener('change', applyFilters);
+        exportBtn.addEventListener('click', exportToCSV);
+
+        // 页面加载后，从 /datasets/index.html 拉取数据并渲染
+        loadDatasetsFromBrowsePage();
     </script>
 </body>
 </html>
