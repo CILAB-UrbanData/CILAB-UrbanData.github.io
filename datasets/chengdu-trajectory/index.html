@@ -172,11 +172,11 @@
                 <tbody class="divide-y divide-gray-200">
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Trajectory Files</td>
-                    <td class="py-3 text-sm text-gray-900">traj_train.csv / traj_valid.csv / traj_test.csv</td>
+                    <td class="py-3 text-sm text-gray-900">train.csv / valid.csv / test.csv</td>
                   </tr>
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Road Network</td>
-                    <td class="py-3 text-sm text-gray-900">map/nodes.shp, map/edges.shp</td>
+                    <td class="py-3 text-sm text-gray-900">map/nodes.shp, map/edges.shp (with all supporting shapefile components)</td>
                   </tr>
                   <tr>
                     <td class="py-3 text-sm font-medium text-gray-500">Trajectories</td>
@@ -212,24 +212,42 @@
           <h3 class="text-xl font-semibold text-primary-900 mb-6">Download</h3>
 
           <div class="grid md:grid-cols-2 gap-8">
+            <!-- Whole folder on HuggingFace -->
             <div class="border border-gray-200 rounded-lg p-6">
-              <h4 class="text-lg font-semibold text-primary-900 mb-2">Dataset Files</h4>
+              <h4 class="text-lg font-semibold text-primary-900 mb-2">Dataset Folder (HuggingFace)</h4>
               <p class="text-gray-600 mb-4">
-                Download link is currently not published.
+                Complete dataset folder <code>chengdu_8days_data/</code>, including
+                <code>train.csv</code>, <code>valid.csv</code>, <code>test.csv</code> and the
+                <code>map/</code> subdirectory with all shapefile components.
               </p>
 
-              <a class="block text-center bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium cursor-not-allowed select-none"
-                 href="javascript:void(0)" aria-disabled="true">
-                Download Unavailable
+              <a class="block text-center bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                 href="https://huggingface.co/datasets/SJTU-CILAB/MTGBench/tree/main/chengdu_8days_data"
+                 target="_blank" rel="noopener noreferrer">
+                Open <code>chengdu_8days_data/</code> on HuggingFace
               </a>
+
+              <p class="text-xs text-gray-500 mt-3">
+                You can click “Download” on HuggingFace to get the folder, or use
+                <code>git lfs</code> to clone the dataset.
+              </p>
             </div>
 
+            <!-- Structure summary -->
             <div class="border border-gray-200 rounded-lg p-6">
               <h4 class="text-lg font-semibold text-primary-900 mb-2">Included Structure</h4>
               <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-700">
+                <p class="mb-2"><strong>Folder layout under <code>chengdu_8days_data/</code>:</strong></p>
                 <ul class="list-disc pl-5 space-y-1">
-                  <li><code>traj_train.csv</code>, <code>traj_valid.csv</code>, <code>traj_test.csv</code></li>
-                  <li><code>map/nodes.shp</code>, <code>map/edges.shp</code></li>
+                  <li><code>train.csv</code> – training trajectories (headerless, 4 columns)</li>
+                  <li><code>valid.csv</code> – validation trajectories</li>
+                  <li><code>test.csv</code> – test trajectories</li>
+                  <li><code>map/</code> – OSM-based road network shapefiles, e.g.:
+                    <ul class="list-disc pl-5 mt-1">
+                      <li><code>nodes.shp</code>, <code>nodes.dbf</code>, <code>nodes.shx</code>, <code>nodes.prj</code>, …</li>
+                      <li><code>edges.shp</code>, <code>edges.dbf</code>, <code>edges.shx</code>, <code>edges.prj</code>, …</li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -242,12 +260,13 @@
 
           <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p class="text-sm text-yellow-900">
-              <strong>Important:</strong> <code>traj_*.csv</code> files are <strong>headerless</strong> and have exactly <strong>4 columns</strong>.
+              <strong>Important:</strong> <code>train.csv</code>, <code>valid.csv</code>, and <code>test.csv</code>
+              are <strong>headerless</strong> and have exactly <strong>4 columns</strong>.
               Interpret fields by <strong>column position</strong>. Columns 3–4 contain serialized lists (with commas).
             </p>
           </div>
 
-          <h4 class="text-lg font-semibold text-primary-900 mb-3">Trajectory files: traj_train.csv / traj_valid.csv / traj_test.csv</h4>
+          <h4 class="text-lg font-semibold text-primary-900 mb-3">Trajectory CSV files: train.csv / valid.csv / test.csv</h4>
 
           <div class="overflow-x-auto mb-8">
             <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
@@ -302,8 +321,8 @@
           <h4 class="text-lg font-semibold text-primary-900 mb-3">Road network files: map/nodes.shp &amp; map/edges.shp</h4>
           <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-gray-700">
             <ul class="list-disc pl-5 space-y-1 text-sm">
-              <li><code>nodes.shp</code>: OSM node information (graph nodes).</li>
-              <li><code>edges.shp</code>: OSM edge/segment information (graph edges). Total edges: <strong>107,655</strong>.</li>
+              <li><code>nodes.shp</code> (+ <code>.dbf</code>, <code>.shx</code>, <code>.prj</code>, …): OSM node information (graph nodes).</li>
+              <li><code>edges.shp</code> (+ corresponding components): OSM edge/segment information (graph edges). Total edges: <strong>107,655</strong>.</li>
             </ul>
           </div>
 
@@ -357,4 +376,3 @@
   </script>
 </body>
 </html>
-
